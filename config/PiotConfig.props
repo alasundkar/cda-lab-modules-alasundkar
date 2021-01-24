@@ -4,7 +4,7 @@
 # This provides a section-based configuration format for use by
 # ConfigUtil with keys defined in ConfigConst.
 #
-
+#
 #
 # MQTT client configuration information
 #
