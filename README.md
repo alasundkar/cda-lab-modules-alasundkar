@@ -33,6 +33,7 @@ Lastly, there are some '.' files pertaining to dev environment setup that might 
 
 * NOTE: The directory structure and all files are subject to change based on feedback I receive from readers of my book and students in my IoT class, as well as improvements I find to be helpful for overall repo betterment.
 
+
 # Other things to know
 
 ## Pull requests
