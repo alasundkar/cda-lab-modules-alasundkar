@@ -19,8 +19,10 @@ class SystemMemUtilTask(BaseSystemUtilTask):
 	"""
 
 	def __init__(self):
-		pass
+		#pass
+		super(SystemMemUtilTask, self).__init__()
 	
 	def _getSystemUtil(self) -> float:
-		pass
+		return psutil.virtual_memory().percent
+		#pass
 		

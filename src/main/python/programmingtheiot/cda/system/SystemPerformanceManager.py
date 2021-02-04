@@ -25,17 +25,28 @@ class SystemPerformanceManager(object):
 	
 	"""
 
-	def __init__(self):
+	def __init__(self, pollRate: int = 30):
 		pass
+		self.cpuUtilTask = SystemCpuUtilTask()
+		self.memUtilTask = SystemMemUtilTask()
+		self.scheduler = BackgroundScheduler()
+		self.scheduler.add_job(self.handleTelemetry, 'interval', seconds = pollRate)
 
 	def handleTelemetry(self):
 		pass
+		self.cpuUtilPct = self.cpuUtilTask.getTelemetryValue()
+		self.memUtilPct = self.memUtilTask.getTelemetryValue()
+		logging.info('CPU utilization is %s percent, and memory utilization is %s percent.', str(self.cpuUtilPct), str(self.memUtilPct))
 		
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
 		pass
 	
 	def startManager(self):
-		pass
+		#pass
+		logging.info("Started SystemPerformanceManager")
+		self.scheduler.start()
 		
 	def stopManager(self):
-		pass
+		#pass
+		logging.info("Stopped SystemPerformanceManager")
+		self.scheduler.shutdown()
