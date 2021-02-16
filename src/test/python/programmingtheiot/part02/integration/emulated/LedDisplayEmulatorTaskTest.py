@@ -12,6 +12,8 @@ import unittest
 
 from time import sleep
 
+import programmingtheiot.common.ConfigConst as ConfigConst
+
 from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.cda.emulated.LedDisplayEmulatorTask import LedDisplayEmulatorTask
 
@@ -48,15 +50,14 @@ class LedDisplayEmulatorTaskTest(unittest.TestCase):
 		pass
 
 	def testUpdateEmulator(self):
-		ad = ActuatorData(actuatorType = ActuatorData.LED_DISPLAY_ACTUATOR_TYPE)
-		ad.setCommand(ActuatorData.COMMAND_ON)
+		ad = ActuatorData(actuatorType = ConfigConst.LED_DISPLAY_ACTUATOR_TYPE)
+		ad.setCommand(ConfigConst.COMMAND_ON)
 		ad.setStateData(self.HELLO_WORLD_A)
 		
-		self.assertTrue(self.lddSimTask.updateActuator(ad))
-		adr = self.lddSimTask.getLatestActuatorResponse()
+		adr = self.lddSimTask.updateActuator(ad)
 		
 		if adr:
-			self.assertEqual(adr.getCommand(), ActuatorData.COMMAND_ON)
+			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_ON)
 			self.assertEqual(adr.getStatusCode(), 0)
 			logging.info("ActuatorData: " + str(adr))
 			
@@ -67,11 +68,10 @@ class LedDisplayEmulatorTaskTest(unittest.TestCase):
 			
 		ad.setStateData(self.HELLO_WORLD_B)
 		
-		self.assertTrue(self.lddSimTask.updateActuator(ad))
-		adr = self.lddSimTask.getLatestActuatorResponse()
+		adr = self.lddSimTask.updateActuator(ad)
 		
 		if adr:
-			self.assertEqual(adr.getCommand(), ActuatorData.COMMAND_ON)
+			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_ON)
 			self.assertEqual(adr.getStatusCode(), 0)
 			logging.info("ActuatorData: " + str(adr))
 			
@@ -79,13 +79,12 @@ class LedDisplayEmulatorTaskTest(unittest.TestCase):
 		else:
 			logging.warning("ActuatorData is None.")
 			
-		ad.setCommand(ActuatorData.COMMAND_OFF)
+		ad.setCommand(ConfigConst.COMMAND_OFF)
 		
-		self.assertTrue(self.lddSimTask.updateActuator(ad))
-		adr = self.lddSimTask.getLatestActuatorResponse()
+		adr = self.lddSimTask.updateActuator(ad)
 		
 		if adr:
-			self.assertEqual(adr.getCommand(), ActuatorData.COMMAND_OFF)
+			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_OFF)
 			self.assertEqual(adr.getStatusCode(), 0)
 			logging.info("ActuatorData: " + str(adr))
 		else:

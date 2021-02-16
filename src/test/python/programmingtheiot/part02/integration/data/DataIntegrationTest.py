@@ -51,7 +51,7 @@ class DataIntegrationTest(unittest.TestCase):
 			
 	def setUp(self):
 		logging.info("================================================")
-		logging.info("DataUtil test execution...")
+		logging.info("DataIntegrationTest test execution...")
 		logging.info("================================================")
 		
 		pass

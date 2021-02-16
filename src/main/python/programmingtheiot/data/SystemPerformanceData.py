@@ -8,7 +8,8 @@
 #
 
 import programmingtheiot.common.ConfigConst as ConfigConst
-
+from programmingtheiot.cda.system.SystemCpuUtilTask import SystemCpuUtilTask
+from programmingtheiot.cda.system.SystemMemUtilTask import SystemMemUtilTask
 from programmingtheiot.data.BaseIotData import BaseIotData
 
 class SystemPerformanceData(BaseIotData):
@@ -16,29 +17,61 @@ class SystemPerformanceData(BaseIotData):
 	Shell representation of class for student implementation.
 	
 	"""
+	cpuUtil = ConfigConst.DEFAULT_VAL
+	diskUtil = 0.0
+	memUtil = ConfigConst.DEFAULT_VAL
 	DEFAULT_VAL = 0.0
 	
 	def __init__(self, d = None):
 		super(SystemPerformanceData, self).__init__(name = ConfigConst.SYSTEM_PERF_MSG, d = d)
-		pass
+		##pass
 	
 	def getCpuUtilization(self):
-		pass
+		"""
+		Get CPU Utilization value
+		"""
+		return self.CPU_Utilization
 	
 	def getDiskUtilization(self):
-		pass
+		"""
+		Get Disk Utilization value
+		"""
+		return self.Disk_Utilization
 	
 	def getMemoryUtilization(self):
-		pass
+		"""
+		Get Memory Utilization Value
+		"""
+		return self.Memory_Utilization
 	
 	def setCpuUtilization(self, cpuUtil):
-		pass
+		"""
+		Modifies the CPU utilization value for monitoring purpose
+		@param cpuUtil: CPU utilization value
+		"""
+		self.CPU_Utilization = cpuUtil
+		self.updateTimeStamp()
 	
 	def setDiskUtilization(self, diskUtil):
-		pass
+		"""
+		Modifies Disk Utilization value for monitoring purpose
+		@param diskUtil: Disk Utilization value 
+		"""
+		self.Disk_Utilization = diskUtil
 	
 	def setMemoryUtilization(self, memUtil):
-		pass
+		"""
+		Modifies the Memory Utilization Value for monitoring purpose
+		@param memUtil: Memory Utilization Value 
+		"""
+		self.Memory_Utilization = memUtil
+		self.updateTimeStamp()
 	
 	def _handleUpdateData(self, data):
-		pass
+		"""
+		Update the system performance data 
+		@param data: updated system performance data 
+		"""
+		self.setCpuUtilization(data.getCpuUtilization())
+		self.setDiskUtilization(data.getDiskUtilization())
+		self.setMemoryUtilization(data.getMemoryUtilization())

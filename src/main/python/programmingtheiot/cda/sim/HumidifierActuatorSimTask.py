@@ -6,7 +6,7 @@
 # 
 # Copyright (c) 2020 by Andrew D. King
 # 
-
+import programmingtheiot.common.ConfigConst as ConfigConst
 from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.cda.sim.BaseActuatorSimTask import BaseActuatorSimTask
 
@@ -21,5 +21,4 @@ class HumidifierActuatorSimTask(BaseActuatorSimTask):
 	"""
 
 	def __init__(self):
-		pass
-		
+		super(HumidifierActuatorSimTask, self).__init__(typeID = ConfigConst.HUMIDIFIER_ACTUATOR_TYPE, name = ConfigConst.HUMIDIFIER_ACTUATOR_NAME, simpleName = "HUMIDIFIER")		

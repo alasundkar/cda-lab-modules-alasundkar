@@ -14,21 +14,21 @@ from time import sleep
 
 import programmingtheiot.common.ConfigConst as ConfigConst
 
-from programmingtheiot.cda.system.SensorAdapterManager import SensorAdapterManager
-from programmingtheiot.common.DefaultDataMessageListener import DefaultDataMessageListener
-
+from programmingtheiot.cda.app.DeviceDataManager import DeviceDataManager
 from programmingtheiot.data.ActuatorData import ActuatorData
 
-class SensorEmulatorManagerTest(unittest.TestCase):
+class DeviceDataManagerWithCommsTest(unittest.TestCase):
 	"""
-	This test case class contains very basic unit tests for
-	ActuatorSimAdapterManager. It should not be considered complete,
+	This test case class contains very basic integration tests for
+	DeviceDataManager. It should not be considered complete,
 	but serve as a starting point for the student implementing
 	additional functionality within their Programming the IoT
 	environment.
 	
-	NOTE: This test requires the sense_emu_gui to be running
-	and must have access to the underlying libraries that
+	NOTE: This test MAY require the sense_emu_gui to be running,
+	depending on whether or not the 'enableEmulator' flag is
+	True within the ConstraineDevice section of PiotConfig.props.
+	If so, it must have access to the underlying libraries that
 	support the pisense module. On Windows, one way to do
 	this is by installing pisense and sense-emu within the
 	Bash on Ubuntu on Windows environment and then execute this
@@ -40,11 +40,7 @@ class SensorEmulatorManagerTest(unittest.TestCase):
 	@classmethod
 	def setUpClass(self):
 		logging.basicConfig(format = '%(asctime)s:%(module)s:%(levelname)s:%(message)s', level = logging.DEBUG)
-		logging.info("Testing SensorAdapterManager class [using SenseHAT emulator]...")
-		
-		self.defaultMsgListener = DefaultDataMessageListener()
-		self.sensorAdapterMgr = SensorAdapterManager(useEmulator = True)
-		self.sensorAdapterMgr.setDataMessageListener(self.defaultMsgListener)
+		logging.info("Testing DeviceDataManager class...")
 		
 	def setUp(self):
 		pass
@@ -52,13 +48,18 @@ class SensorEmulatorManagerTest(unittest.TestCase):
 	def tearDown(self):
 		pass
 
-	def testRunAllSimulators(self):
-		self.sensorAdapterMgr.startManager()
+	#@unittest.skip("Ignore for now.")
+	def testStartAndStopManagerWithMqttAndCoap(self):
+		ddMgr = DeviceDataManager(enableMqtt = False, enableCoap = False)
 		
-		sleep(60)
+		actuatorData = ActuatorData(actuatorType = ConfigConst.HVAC_ACTUATOR_TYPE)
+		actuatorData.setCommand(ConfigConst.COMMAND_ON)
+		actuatorData.setStateData("This is a test.")
 		
-		self.sensorAdapterMgr.stopManager()
-
+		ddMgr.handleActuatorCommandMessage(actuatorData)
+		
+		sleep(10)
+		
 if __name__ == "__main__":
 	unittest.main()
 	

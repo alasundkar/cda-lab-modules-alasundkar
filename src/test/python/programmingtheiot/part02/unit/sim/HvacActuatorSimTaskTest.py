@@ -10,6 +10,8 @@
 import logging
 import unittest
 
+import programmingtheiot.common.ConfigConst as ConfigConst
+
 from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.cda.sim.HvacActuatorSimTask import HvacActuatorSimTask
 
@@ -37,30 +39,30 @@ class HvacActuatorSimTaskTest(unittest.TestCase):
 		pass
 
 	def testUpdateActuator(self):
-		ad = ActuatorData(actuatorType = ActuatorData.HVAC_ACTUATOR_TYPE)
-		ad.setCommand(ActuatorData.COMMAND_ON)
+		ad = ActuatorData(typeID = ConfigConst.HVAC_ACTUATOR_TYPE)
+		ad.setCommand(ConfigConst.COMMAND_ON)
 		ad.setValue(self.DEFAULT_VAL_A)
-		self.assertTrue(self.hSimTask.updateActuator(ad))
-		adr = self.hSimTask.getLatestActuatorResponse()
+		
+		adr = self.hSimTask.updateActuator(ad)
 		
 		self.assertIsNotNone(adr)
 		self.assertEquals(adr.getValue(), self.DEFAULT_VAL_A)
 		logging.info("ActuatorData: " + str(adr))
 		
 		ad.setValue(self.DEFAULT_VAL_B)
-		self.assertTrue(self.hSimTask.updateActuator(ad))
-		adr = self.hSimTask.getLatestActuatorResponse()
+		
+		adr = self.hSimTask.updateActuator(ad)
 		
 		self.assertIsNotNone(adr)
 		self.assertEquals(adr.getValue(), self.DEFAULT_VAL_B)
 		logging.info("ActuatorData: " + str(adr))
 		
-		ad.setCommand(ActuatorData.COMMAND_OFF)
-		self.assertTrue(self.hSimTask.updateActuator(ad))
-		adr = self.hSimTask.getLatestActuatorResponse()
+		ad.setCommand(ConfigConst.COMMAND_OFF)
+		
+		adr = self.hSimTask.updateActuator(ad)
 		
 		self.assertIsNotNone(adr)
-		self.assertEquals(adr.getCommand(), ActuatorData.COMMAND_OFF)
+		self.assertEquals(adr.getCommand(), ConfigConst.COMMAND_OFF)
 		logging.info("ActuatorData: " + str(adr))
 			
 if __name__ == "__main__":
