@@ -26,8 +26,8 @@ class ActuatorDataTest(unittest.TestCase):
 	
 	DEFAULT_NAME = "ActuatorDataFooBar"
 	DEFAULT_STATE_DATA = "{state: None}"
-#	DEFAULT_VALUE = 15.2
-	DEFAULT_VALUE= 0.0
+	DEFAULT_VALUE = 15.2
+	#DEFAULT_VALUE= 0.0
 	@classmethod
 	def setUpClass(self):
 		logging.basicConfig(format = '%(asctime)s:%(module)s:%(levelname)s:%(message)s', level = logging.DEBUG)
@@ -47,7 +47,8 @@ class ActuatorDataTest(unittest.TestCase):
 
 	def testParameterUpdates(self):
 		ad = self._createTestActuatorData()
-		
+		print("testParameterUpdates")
+		print(ad)
 		self.assertEquals(ad.getName(), self.DEFAULT_NAME)
 		self.assertEquals(ad.getCommand(), ConfigConst.COMMAND_ON)
 		self.assertEquals(ad.getStateData(), self.DEFAULT_STATE_DATA)
@@ -58,6 +59,8 @@ class ActuatorDataTest(unittest.TestCase):
 		ad2 = self._createTestActuatorData()
 		
 		ad.updateData(ad2)
+		print("testFullUpdate:")
+		print(ad)
 		
 		self.assertEquals(ad.getCommand(), ConfigConst.COMMAND_ON)
 		self.assertEquals(ad.getStateData(), self.DEFAULT_STATE_DATA)

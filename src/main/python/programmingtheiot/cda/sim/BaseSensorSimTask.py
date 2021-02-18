@@ -26,7 +26,7 @@ class BaseSensorSimTask():
 	currentDataSetIndex = 0
 
 	
-	def __init__(self, sensorName = ConfigConst.NOT_SET, sensorType: int = ConfigConst.DEFAULT_SENSOR_TYPE, dataSet = None, minVal: float = DEFAULT_MIN_VAL, maxVal: float = DEFAULT_MAX_VAL):
+	def __init__(self,  sensorType: int = ConfigConst.DEFAULT_SENSOR_TYPE, sensorName = ConfigConst.NOT_SET, dataSet = None, minVal: float = DEFAULT_MIN_VAL, maxVal: float = DEFAULT_MAX_VAL):
 		self.sensorType = sensorType
 		self.dataSet = dataSet
 		#self.minVal = minVal
@@ -49,28 +49,34 @@ class BaseSensorSimTask():
 		"""
 		generates sensor data and returns it
 		"""
-		sd = SensorData()
-		sd.DEFAULT_SENSOR_TYPE = self.sensorType
+		self.senseData = SensorData( self.sensorType)
 		if self.useRandomizer:
-			sd.setValue(random.randint(self.DEFAULT_MIN_VAL, self.DEFAULT_MAX_VAL))
+			self.senseData.setValue(random.randint(self.DEFAULT_MIN_VAL, self.DEFAULT_MAX_VAL))
 		else:
-			if self.currentDataSetIndex >= 0 and self.currentDataSetIndex < len(self.dataSet.dataEntries):
-				sd.setValue(self.dataSet.dataEntries[self.currentDataSetIndex])
+			self.senseData.setValue(random.randint(self.DEFAULT_MIN_VAL, self.DEFAULT_MAX_VAL))
+			if self.currentDataSetIndex >= 0 :
+			#	sd.setValue(self.dataSet.dataEntries[self.currentDataSetIndex])
+			
+			#else:
+			#	self.currentDataSetIndex = 0
+				self.dataSetIndex = self.dataSetIndex + 1
 			else:
-				self.currentDataSetIndex = 0
-				sd.setValue(self.dataSet[self.currentDataSetIndex])
-		self.currentDataSetIndex += 1
-		self.latestSensorData = sd
-		return self.latestSensorData
+				self.dataSetIndex = 0
+		return self.senseData
+	
+	#			sd.setValue(self.dataSet[self.currentDataSetIndex])
+	#	self.currentDataSetIndex += 1
+	#	self.latestSensorData = sd
+	#	return self.latestSensorData
 	
 	def getTelemetryValue(self) -> float:
 		"""
 		returns the sensor value
 		"""
-		sd = None
+		self.senseData = None
 		if self.latestSensorData is None:
-			sd = self.generateTelemetry()
+			self.senseData = self.generateTelemetry()
 		else:
-			sd = self.latestSensorData
-		return sd.getValue()
+			self.senseData = self.latestSensorData
+		return self.senseData.getValue()
 	

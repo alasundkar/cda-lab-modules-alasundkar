@@ -23,14 +23,14 @@ class SensorData(BaseIotData):
 		super(SensorData, self).__init__(name = name, typeID = typeID, d = d)
 		self.value = ConfigConst.DEFAULT_VAL
 
-# 		if d:
-# 			self.sensorType = d['sensorType']
-# 			self.value = d['value']
-# 			self.name = d['name']
-# 		else:
-# 			self.sensorType = typeID
-# 			self.value = self.DEFAULT_VAL
-# 			self.name = name
+		if d:
+			self.sensorType = d['sensorType']
+			self.value = d['value']
+			self.name = d['name']
+		else:
+			self.sensorType = typeID
+			self.value = self.DEFAULT_VAL
+			self.name = name
 	
 	def getSensorType(self) -> int:
 		"""

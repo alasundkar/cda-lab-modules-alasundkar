@@ -52,7 +52,7 @@ class ActuatorData(BaseIotData):
 		return False
 	
 	def setCommand(self, command: int):
-		self.DEFAULT_COMMAND = command
+		self.command = command
 	
 	def setAsResponse(self):
 		pass
@@ -65,7 +65,9 @@ class ActuatorData(BaseIotData):
 		Modifies the default value readings of the actuator.
 		"""
 		self.updateTimeStamp()
-		self.val = val
+		self.value = val
+		print("print setvalue")
+		print(self.value)
 		
 	def _handleUpdateData(self, data):
 		"""

@@ -9,9 +9,7 @@
 
 import logging
 import unittest
-
 import programmingtheiot.common.ConfigConst as ConfigConst
-
 from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.cda.sim.HumidifierActuatorSimTask import HumidifierActuatorSimTask
 
@@ -42,24 +40,24 @@ class HumidifierActuatorSimTaskTest(unittest.TestCase):
 		ad = ActuatorData(typeID = ConfigConst.HUMIDIFIER_ACTUATOR_TYPE)
 		ad.setCommand(ConfigConst.COMMAND_ON)
 		ad.setValue(self.DEFAULT_VAL_A)
-		
-		adr = self.hSimTask.updateActuator(ad)
+		self.assertTrue(self.hSimTask.updateActuator(ad))
+		adr = self.hSimTask.getLatestActuatorResponse()
 		
 		self.assertIsNotNone(adr)
 		self.assertEquals(adr.getValue(), self.DEFAULT_VAL_A)
 		logging.info("ActuatorData: " + str(adr))
 		
 		ad.setValue(self.DEFAULT_VAL_B)
-		
-		adr = self.hSimTask.updateActuator(ad)
+		self.assertTrue(self.hSimTask.updateActuator(ad))
+		adr = self.hSimTask.getLatestActuatorResponse()
 		
 		self.assertIsNotNone(adr)
 		self.assertEquals(adr.getValue(), self.DEFAULT_VAL_B)
 		logging.info("ActuatorData: " + str(adr))
 		
 		ad.setCommand(ConfigConst.COMMAND_OFF)
-		
-		adr = self.hSimTask.updateActuator(ad)
+		self.assertTrue(self.hSimTask.updateActuator(ad))
+		adr = self.hSimTask.getLatestActuatorResponse()
 		
 		self.assertIsNotNone(adr)
 		self.assertEquals(adr.getCommand(), ConfigConst.COMMAND_OFF)

@@ -15,15 +15,15 @@ import programmingtheiot.common.ConfigConst as ConfigConst
 from programmingtheiot.data.ActuatorData import ActuatorData
 
 class BaseActuatorSimTask():
-	typeID = None
-	simpleName = None
-	latestActuatorData = None
+# 	typeID = None
+# 	simpleName = None
+# 	latestActuatorData = None
 	"""
 	Shell representation of class for student implementation.
 	
 	"""
 
-	def __init__(self, name: str = ConfigConst.NOT_SET, typeID: int = ConfigConst.DEFAULT_ACTUATOR_TYPE, simpleName: str = "Actuator"):
+	def __init__(self,  typeID: int = ConfigConst.DEFAULT_ACTUATOR_TYPE,name: str = ConfigConst.NOT_SET, simpleName: str = "Actuator"):
 		self.typeID = typeID
 		self.simpleName = simpleName
 		self.lastKnownCommand = ConfigConst.DEFAULT_COMMAND
@@ -38,14 +38,14 @@ class BaseActuatorSimTask():
 		msg = "\n*******"
 		msg = msg + "\n* O N *"
 		msg = msg + "\n*******"
-		msg = msg + "\n" + self.name + " VALUE -> " + str(val) + "\n======="
+		msg = msg + "\n" + self.simpleName + " VALUE -> " + str(val) + "\n======="
 			
-		logging.info("Simulating %s actuator ON: %s", self.name, msg)
+		logging.info("Simulating %s actuator ON: %s", self.simpleName, msg)
 		
 		return 0
 			
 	"""
-	Deactivates actuator and return if its successfull
+	Deactivates actuator and return if its successfully
 	
 	"""
 	def _deactivateActuator(self, val: float = ConfigConst.DEFAULT_VAL, stateData: str = None) -> int:
@@ -69,7 +69,8 @@ class BaseActuatorSimTask():
 		to self._handleActuation, provided the sub-class implements this
 		template method.
 		"""
-		if data and self.typeID == data.getTypeID():
+	#	if data and self.typeID == data.getTypeID(self):
+		if data:
 			statusCode = ConfigConst.DEFAULT_STATUS
 			
 			# check if the new command is the same as the old - if so, ignore

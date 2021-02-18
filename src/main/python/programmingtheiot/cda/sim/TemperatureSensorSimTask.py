@@ -20,6 +20,6 @@ class TemperatureSensorSimTask(BaseSensorSimTask):
 	
 	"""
 
-	def __init__(self,dataSet):
+	def __init__(self,dataSet=None):
 		super(TemperatureSensorSimTask, self).__init__( ConfigConst.TEMP_SENSOR_TYPE, dataSet = dataSet, minVal = SensorDataGenerator.LOW_NORMAL_INDOOR_TEMP, maxVal = SensorDataGenerator.HI_NORMAL_INDOOR_TEMP)
 	
