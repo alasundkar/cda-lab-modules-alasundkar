@@ -15,9 +15,9 @@ import programmingtheiot.common.ConfigConst as ConfigConst
 from programmingtheiot.data.ActuatorData import ActuatorData
 
 class BaseActuatorSimTask():
-# 	typeID = None
-# 	simpleName = None
-# 	latestActuatorData = None
+	typeID = None
+	simpleName = None
+	latestActuatorData = None
 	"""
 	Shell representation of class for student implementation.
 	
@@ -53,12 +53,12 @@ class BaseActuatorSimTask():
 		msg = msg + "\n* OFF *"
 		msg = msg + "\n*******"
 		
-		logging.info("Simulating %s actuator OFF: %s", self.name, msg)
+		logging.info("Simulating %s actuator OFF: %s", self.simpleName, msg)
 				
 		return 0
 		
 	def getLatestActuatorResponse(self) -> ActuatorData:
-		pass
+		return self.latestActuatorData 
 	
 	def getSimpleName(self) -> str:
 		pass
@@ -70,37 +70,62 @@ class BaseActuatorSimTask():
 		template method.
 		"""
 	#	if data and self.typeID == data.getTypeID(self):
-		if data:
-			statusCode = ConfigConst.DEFAULT_STATUS
+# 		if data:
+# 			statusCode = ConfigConst.DEFAULT_STATUS
+# 			
+# 			# check if the new command is the same as the old - if so, ignore
+# 			curCommand = data.getCommand()
+# 			
+# 			if curCommand is self.lastKnownCommand:
+# 				logging.debug("New actuator command is a repeat of current state. Ignoring: %s", str(curCommand))
+# 			else:
+# 				if curCommand == ConfigConst.COMMAND_ON:
+# 					logging.info("Activating actuator...")
+# 					statusCode = self._activateActuator(val = data.getValue(), stateData = data.getStateData())
+# 				elif curCommand == ConfigConst.COMMAND_OFF:
+# 					logging.info("Deactivating actuator...")
+# 					statusCode = self._deactivateActuator(val = data.getValue(), stateData = data.getStateData())
+# 				else:
+# 					logging.warning("ActuatorData command is unknown. Ignoring: %s", str(curCommand))
+# 					statusCode = -1
+# 				
+# 				# update the last known actuator command
+# 				self.lastKnownCommand = curCommand
+# 				
+# 				# create the ActuatorData response from the original command
+# 				actuatorResponse = ActuatorData()
+# 				actuatorResponse.updateData(data)
+# 				actuatorResponse.setStatusCode(statusCode)
+# 				actuatorResponse.setAsResponse()
+# 				
+# 				return actuatorResponse
+# 			
+# 		return None
+
+
+
+
+		if data is not None:
+			if data.getCommand() == ConfigConst.COMMAND_ON:
+				logging.info("Activating actuator...")	
+				statusCode = self._activateActuator(val = data.getValue(), stateData = data.getStateData())
+				statusCode = ConfigConst.DEFAULT_STATUS
+			if data.getCommand() == ConfigConst.COMMAND_OFF:
+				logging.info("Deactivating actuator...")
+				statusCode = self._deactivateActuator(val = data.getValue(), stateData = data.getStateData())
+				statusCode = 0
+			self.latestActuatorData = data
+# 			self.latestActuatorData.setStatusCode(0)
+# 			self.latestActuatorData.setAsResponse()
 			
-			# check if the new command is the same as the old - if so, ignore
-			curCommand = data.getCommand()
-			
-			if curCommand is self.lastKnownCommand:
-				logging.debug("New actuator command is a repeat of current state. Ignoring: %s", str(curCommand))
-			else:
-				if curCommand == ConfigConst.COMMAND_ON:
-					logging.info("Activating actuator...")
-					statusCode = self._activateActuator(val = data.getValue(), stateData = data.getStateData())
-				elif curCommand == ConfigConst.COMMAND_OFF:
-					logging.info("Deactivating actuator...")
-					statusCode = self._deactivateActuator(val = data.getValue(), stateData = data.getStateData())
-				else:
-					logging.warning("ActuatorData command is unknown. Ignoring: %s", str(curCommand))
-					statusCode = -1
-				
-				# update the last known actuator command
-				self.lastKnownCommand = curCommand
-				
-				# create the ActuatorData response from the original command
-				actuatorResponse = ActuatorData()
-				actuatorResponse.updateData(data)
-				actuatorResponse.setStatusCode(statusCode)
-				actuatorResponse.setAsResponse()
-				
-				return actuatorResponse
-			
-		return None
+			actuatorResponse = ActuatorData()
+			actuatorResponse.updateData(data)
+			actuatorResponse.setStatusCode(statusCode)
+			actuatorResponse.setAsResponse()
+ 				
+			return True
+		return False
+	
 		
 	def _handleActuation(self, cmd: int, val: float = 0.0, stateData: str = None) -> int:
 		"""

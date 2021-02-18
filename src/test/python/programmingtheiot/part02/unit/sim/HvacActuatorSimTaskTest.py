@@ -38,7 +38,7 @@ class HvacActuatorSimTaskTest(unittest.TestCase):
 		pass
 
 	def testUpdateActuator(self):
-		ad = ActuatorData(actuatorType = ConfigConst.HVAC_ACTUATOR_TYPE)
+		ad = ActuatorData(typeID = ConfigConst.HVAC_ACTUATOR_TYPE)
 		ad.setCommand(ConfigConst.COMMAND_ON)
 		ad.setValue(self.DEFAULT_VAL_A)
 		self.assertTrue(self.hSimTask.updateActuator(ad))

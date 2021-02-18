@@ -69,24 +69,6 @@ class SensorAdapterManager(object):
 			pressureData= self.dataGenerator.generateDailyEnvironmentPressureDataSet( minValue=pressureFloor, maxValue=pressureCeiling, useSeconds=False)
 		        
 	def handleTelemetry(self):
-# 		humidityData1 = self.HumiditySensorSimTask.generateTelemetry(self)  
-# 		pressureData1 = self.PressureSensorSimTask.generateTelemetry(self)  
-# 		tempData1     = self.TemperatureSensorSimTask.generateTelemetry(self)
-# 				
-# 	#	humidityData1 = self.humidityAdapter.generateTelemetry()  
-# 	#	pressureData1 = self.pressureAdapter.generateTelemetry()  
-# 	#	tempData1     = self.tempAdapter.generateTelemetry()    
-# 		humidityData1.setLocationID(self.locationID)  
-# 		pressureData1.setLocationID(self.locationID)  
-# 		tempData1.setLocationID(self.locationID)    
-# 		logging.info('Generated humidity data: ' + str(humidityData1))  
-# 		logging.info('Generated pressure data: ' + str(pressureData1))  
-# 		logging.info('Generated temp data: ' + str(tempData1))    
-# 		if self.dataMsgListener:    
-# 			self.dataMsgListener.handleSensorMessage(humidityData1)    
-# 			self.dataMsgListener.handleSensorMessage(pressureData1)    
-# 			self.dataMsgListener.handleSensorMessage(tempData1)
-# 		self.setDataMessageListener(IDataMessageListener)
 		
 # 		if self.useEmulator == False:
 			humiditySensorData = self.humiditySensorSimTask.generateTelemetry()
