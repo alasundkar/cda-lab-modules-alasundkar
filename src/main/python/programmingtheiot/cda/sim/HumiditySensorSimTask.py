@@ -23,8 +23,4 @@ class HumiditySensorSimTask(BaseSensorSimTask):
 	def __init__(self, dataSet = None):
 		super(HumiditySensorSimTask, self).__init__(ConfigConst.HUMIDITY_SENSOR_TYPE, dataSet = dataSet, minVal = SensorDataGenerator.LOW_NORMAL_ENV_HUMIDITY, maxVal = SensorDataGenerator.HI_NORMAL_ENV_HUMIDITY)
 				
-				
-		#super(HumiditySensorSimTask, self).__init__( name = ConfigConst.HUMIDITY_SENSOR_NAME, typeID = ConfigConst.HUMIDITY_SENSOR_TYPE, dataSet = dataSet, minVal = SensorDataGenerator.LOW_NORMAL_ENV_HUMIDITY, maxVal = SensorDataGenerator.HI_NORMAL_ENV_HUMIDITY)
-	#def __init__(self):
-	#	pass
 	

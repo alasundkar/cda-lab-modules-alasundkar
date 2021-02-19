@@ -35,6 +35,10 @@ class ActuatorAdapterManager(object):
 			self.humidifierActuator = HumidifierActuatorSimTask()
 			# create the HVAC actuator
 			self.hvacActuator = HvacActuatorSimTask()
+	"""
+	Sends Actuator command and return if its successfull
+	
+	"""			
 		
 	def sendActuatorCommand(self, data: ActuatorData) -> bool:
 		if data and not data.isResponseFlagEnabled():    
@@ -58,7 +62,11 @@ class ActuatorAdapterManager(object):
 				logging.warning("Invalid loc ID match: %s", str(self.locationID))  
 		else:    
 			logging.warning("Invalid actuator msg. Response or null. Ignoring.") 
-		return False	
+		return False
+	"""
+	check listener and return if its successful
+	
+	"""		
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
 		if listener:
 			self.dataMsgListener = listener

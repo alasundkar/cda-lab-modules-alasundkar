@@ -34,6 +34,12 @@ class SensorAdapterManager(object):
 	Shell representation of class for student implementation.
 	
 	"""
+	
+	
+	"""
+	Initializes all the three simulation tasks
+	
+	"""
 
 	def __init__(self):
 #def __init__(self):  
@@ -67,7 +73,11 @@ class SensorAdapterManager(object):
 			tempData = self.dataGenerator.generateDailyIndoorTemperatureDataSet(minValue = tempFloor, maxValue = tempCeiling, useSeconds = False)
 			humidityData = self.dataGenerator.generateDailyEnvironmentHumidityDataSet( minValue= humidityFloor, maxValue = humidityCeiling, useSeconds=False)
 			pressureData= self.dataGenerator.generateDailyEnvironmentPressureDataSet( minValue=pressureFloor, maxValue=pressureCeiling, useSeconds=False)
-		        
+
+	"""
+	handles sensor message and generates sensor data
+	
+	"""		        
 	def handleTelemetry(self):
 		
 # 		if self.useEmulator == False:
@@ -78,12 +88,20 @@ class SensorAdapterManager(object):
 			self.dataMsgListener.handleSensorMessage(pressureSensorData)
 			self.dataMsgListener.handleSensorMessage(temperatureSensorData)
 
+	"""
+	check listener and return if its successful
+	
+	"""	
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
 		if listener:
 			self.dataMsgListener = listener
 			return True
 		
 		return False
+	"""
+	Starts Manager
+	
+	"""
 	
 	def startManager(self):  
 		logging.info("Started SensorAdapterManager.")    
@@ -92,6 +110,10 @@ class SensorAdapterManager(object):
 		else:    
 			logging.warning("SensorAdapterManager scheduler already started.")
 			
+	"""
+	Stops Manager
+	
+	"""			
 	def stopManager(self):  
 		logging.info("Stopped SensorAdapterManager.")    
 		try:    

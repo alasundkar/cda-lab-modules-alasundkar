@@ -36,6 +36,10 @@ class DeviceDataManager(IDataMessageListener):
 	def __init__(self):
 		self.configUtil = ConfigUtil()
 		self.dataUtil = DataUtil()
+		"""
+		Initializes sensor,actuator, system performance managers
+	
+		"""
 
 		self.sensorAdapterManager = SensorAdapterManager()
 		self.sensorAdapterManager.setDataMessageListener(self)
