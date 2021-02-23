@@ -32,7 +32,7 @@ class ConstrainedDeviceApp():
 		"""
 		logging.info("Initializing CDA...")
 		self.devDataManager = DeviceDataManager()
-		self.sysPerfManager = SystemPerformanceManager()
+#		self.sysPerfManager = SystemPerformanceManager()
 		
 		# TODO: implementation here
 
@@ -45,7 +45,7 @@ class ConstrainedDeviceApp():
 		
 		# TODO: implementation here
 		self.devDataManager.startManager()
-		self.sysPerfManager.startManager()
+#		self.sysPerfManager.startManager()
 		
 		logging.info("CDA started.")
 
@@ -57,7 +57,7 @@ class ConstrainedDeviceApp():
 		logging.info("CDA stopping...")
 		
 		# TODO: implementation here
-		self.sysPerfManager.stopManager()
+#		self.sysPerfManager.stopManager()
 		self.devDataManager.stopManager()		
 		
 		logging.info("CDA stopped with exit code %s.", str(code))

@@ -18,6 +18,10 @@ from programmingtheiot.cda.system.SystemPerformanceManager import SystemPerforma
 
 from programmingtheiot.common.IDataMessageListener import IDataMessageListener
 from programmingtheiot.common.ResourceNameEnum import ResourceNameEnum
+import programmingtheiot.common.ConfigConst as ConfigConst
+
+from programmingtheiot.common.ConfigUtil import ConfigUtil
+from programmingtheiot.data.DataUtil import DataUtil
 
 from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.data.SensorData import SensorData
@@ -30,28 +34,90 @@ class DeviceDataManager(IDataMessageListener):
 	"""
 	
 	def __init__(self):
-		pass
+		self.configUtil = ConfigUtil()
+		self.dataUtil = DataUtil()
+		"""
+		Initializes sensor,actuator, system performance managers
+	
+		"""
+
+		self.sensorAdapterManager = SensorAdapterManager()
+		self.sensorAdapterManager.setDataMessageListener(self)
+
+		self.systemPerformanceManager = SystemPerformanceManager()
+		self.systemPerformanceManager.setDataMessageListener(self)
+		
+		self.actuatorAdapterManager = ActuatorAdapterManager()
+		self.actuatorAdapterManager.setDataMessageListener(self)
+		
+		self.handleTempChangeOnDevice = self.configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.HANDLE_TEMP_CHANGE_ON_DEVICE_KEY)
+		self.triggerHvacTempFloor = self.configUtil.getFloat(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.TRIGGER_HVAC_TEMP_FLOOR_KEY)
+		self.triggerHvacTempCeiling = self.configUtil.getFloat(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.TRIGGER_HVAC_TEMP_CEILING_KEY);
+
 		
 	def handleActuatorCommandMessage(self, data: ActuatorData) -> bool:
-		pass
-	
+		if data:
+			logging.info("Processing actuator command message.")
+			self.actuatorAdapterMgr.sendActuatorCommand(data)
+			logging.info("And the command message is:")
+			logging.info(self.dataUtil.actuatorDataToJson(data))
+			return True
+		else: 
+			False			
+			
 	def handleActuatorCommandResponse(self, data: ActuatorData) -> bool:
-		pass
+		"""
+		Converts Actuator Data to json format from string format.
+		@param data: ActuatorData 
+		"""
+		logging.info("Processing actuator command response")
+		self.actuateData = DataUtil.actuatorDataToJson(self, data)
+		self._handleUpstreamTransmission(ResourceNameEnum.CDA_ACTUATOR_RESPONSE_RESOURCE, None)
+		
 	
 	def handleIncomingMessage(self, resourceEnum: ResourceNameEnum, msg: str) -> bool:
-		pass
+		"""
+		Converts incoming json message to string format.
+		@param resourceEnum: ResourceNameEnum
+		@param msg: String message  
+		"""
+		logging.info("handleIncomingMessage initiated...")
+		self._handleIncomingDataAnalysis(msg)
 	
 	def handleSensorMessage(self, data: SensorData) -> bool:
-		pass
+		"""
+		Converts Sensor Message Data to json format from string format.
+		@param data: SensorData data 
+		"""
+		logging.info("handleSensorMessage initiated...")
+		self.sensorMessage = DataUtil.sensorDataToJson(self, data)
+		self._handleUpstreamTransmission(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, self.sensorMessage)
+		self._handleSensorDataAnalysis(data)
 	
 	def handleSystemPerformanceMessage(self, data: SystemPerformanceData) -> bool:
-		pass
+		"""
+		Converts System Performance Message to json format from string format.
+		@param data: SystemPerformanceData data 
+		"""
+		logging.info("handleSystemPerformanceMessage has been initiated...")
+		self.systemPerformanceMessage = DataUtil.systemPerformanceDataToJson(self, data)
+		self._handleUpstreamTransmission(ResourceNameEnum.CDA_SYSTEM_PERF_MSG_RESOURCE, self.systemPerformanceMessage)
 	
 	def startManager(self):
-		pass
+		"""
+		Calls the start manager of SystemPerformanceManage and SensorAdapterManager. 
+		"""
+		logging.info("Device Data Manager is starting...")
+		self.sensorAdapterManager.startManager()
+		self.systemPerformanceManager.startManager()
 		
 	def stopManager(self):
-		pass
+		"""
+		Calls the start manager of SystemPerformanceManage and SensorAdapterManager. 
+		"""
+		logging.info("Device Data Manager is stopping...")
+		self.sensorAdapterManager.stopManager()
+		self.systemPerformanceManager.stopManager()
 		
 	def _handleIncomingDataAnalysis(self, msg: str):
 		"""
@@ -61,8 +127,13 @@ class DeviceDataManager(IDataMessageListener):
 		2) Convert msg: Use DataUtil to convert if appropriate.
 		3) Act on msg: Determine what - if any - action is required, and execute.
 		"""
-		pass
-		
+		logging.debug("_handleIncomingDataAnalysis initiated...")
+		if self.validateJSON(msg) == True:
+			self.actuatedData = DataUtil.jsonToActuatorData(self, msg)
+			if(self.actuatedData < ConfigConst.HUMIDITY_SIM_FLOOR_KEY or self.actuatedData > ConfigConst.HUMIDITY_SIM_CEILING_KEY):
+				self.actuateData.setValue(self.actuatedData)
+				self.actuateData.setCommand(self.actuateData.COMMAND_ON)
+						
 	def _handleSensorDataAnalysis(self, data: SensorData):
 		"""
 		Call this from handleSensorMessage() to determine if there's
@@ -70,7 +141,19 @@ class DeviceDataManager(IDataMessageListener):
 		1) Check config: Is there a rule or flag that requires immediate processing of data?
 		2) Act on data: If # 1 is true, determine what - if any - action is required, and execute.
 		"""
-		pass
+		logging.debug("_handleSensorDataAnalysis initiated...")
+		if self.handleTempChangeOnDevice and data.getTypeID() == ConfigConst.TEMP_SENSOR_TYPE:        
+			ad = ActuatorData(typeID = ConfigConst.HVAC_ACTUATOR_TYPE)        
+			if data.getValue() > self.triggerHvacTempCeiling:      
+				ad.setCommand(ConfigConst.COMMAND_ON)      
+				ad.setValue(self.triggerHvacTempCeiling)    
+			elif data.getValue() < self.triggerHvacTempFloor:      
+				ad.setCommand(ConfigConst.COMMAND_ON)      
+				ad.setValue(self.triggerHvacTempFloor)    
+			else:      
+				ad.setCommand(ConfigConst.COMMAND_OFF)        
+				self.handleActuatorCommandMessage(ad)
+				
 		
 	def _handleUpstreamTransmission(self, resourceName: ResourceNameEnum, msg: str):
 		"""
@@ -79,4 +162,4 @@ class DeviceDataManager(IDataMessageListener):
 		1) Check connection: Is there a client connection configured (and valid) to a remote MQTT or CoAP server?
 		2) Act on msg: If # 1 is true, send message upstream using one (or both) client connections.
 		"""
-		pass
+		logging.debug("_handleUpstreamTransmission initiated...")

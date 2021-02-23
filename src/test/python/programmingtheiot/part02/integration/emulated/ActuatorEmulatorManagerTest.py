@@ -12,6 +12,8 @@ import unittest
 
 from time import sleep
 
+import programmingtheiot.common.ConfigConst as ConfigConst
+
 from programmingtheiot.cda.system.ActuatorAdapterManager import ActuatorAdapterManager
 from programmingtheiot.common.DefaultDataMessageListener import DefaultDataMessageListener
 
@@ -51,32 +53,32 @@ class ActuatorEmulatorManagerTest(unittest.TestCase):
 		pass
 
 	def testHumidifierEmulation(self):
-		ad = ActuatorData(actuatorType = ActuatorData.HUMIDIFIER_ACTUATOR_TYPE)
+		ad = ActuatorData(actuatorType = ConfigConst.HUMIDIFIER_ACTUATOR_TYPE)
 		ad.setValue(50.0)
 		
-		ad.setCommand(ActuatorData.COMMAND_ON)
+		ad.setCommand(ConfigConst.COMMAND_ON)
 		self.actuatorAdapterMgr.sendActuatorCommand(ad)
 		
-		ad.setCommand(ActuatorData.COMMAND_OFF)
+		ad.setCommand(ConfigConst.COMMAND_OFF)
 		self.actuatorAdapterMgr.sendActuatorCommand(ad)
 
 	def testHvacEmulation(self):
-		ad = ActuatorData(actuatorType = ActuatorData.HVAC_ACTUATOR_TYPE)
+		ad = ActuatorData(actuatorType = ConfigConst.HVAC_ACTUATOR_TYPE)
 		ad.setValue(22.5)
 		
-		ad.setCommand(ActuatorData.COMMAND_ON)
+		ad.setCommand(ConfigConst.COMMAND_ON)
 		self.actuatorAdapterMgr.sendActuatorCommand(ad)
 		
-		ad.setCommand(ActuatorData.COMMAND_OFF)
+		ad.setCommand(ConfigConst.COMMAND_OFF)
 		self.actuatorAdapterMgr.sendActuatorCommand(ad)
 
 	def testLedDisplayEmulation(self):
-		ad = ActuatorData(actuatorType = ActuatorData.LED_DISPLAY_ACTUATOR_TYPE)
-		ad.setCommand(ActuatorData.COMMAND_ON)
+		ad = ActuatorData(actuatorType = ConfigConst.LED_DISPLAY_ACTUATOR_TYPE)
+		ad.setCommand(ConfigConst.COMMAND_ON)
 		ad.setStateData("What's up?")
 		self.actuatorAdapterMgr.sendActuatorCommand(ad)
 		
-		ad.setCommand(ActuatorData.COMMAND_OFF)
+		ad.setCommand(ConfigConst.COMMAND_OFF)
 		self.actuatorAdapterMgr.sendActuatorCommand(ad)
 
 if __name__ == "__main__":

@@ -12,6 +12,8 @@ import unittest
 
 from time import sleep
 
+import programmingtheiot.common.ConfigConst as ConfigConst
+
 from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.cda.emulated.HumidifierEmulatorTask import HumidifierEmulatorTask
 
@@ -46,15 +48,14 @@ class HumidifierEmulatorTaskTest(unittest.TestCase):
 		pass
 
 	def testUpdateEmulator(self):
-		ad = ActuatorData(actuatorType = ActuatorData.HUMIDIFIER_ACTUATOR_TYPE)
-		ad.setCommand(ActuatorData.COMMAND_ON)
+		ad = ActuatorData(typeID = ConfigConst.HUMIDIFIER_ACTUATOR_TYPE)
+		ad.setCommand(ConfigConst.COMMAND_ON)
 		ad.setValue(50.0)
 		
-		self.assertTrue(self.huSimTask.updateActuator(ad))
-		adr = self.huSimTask.getLatestActuatorResponse()
+		adr = self.huSimTask.updateActuator(ad)
 		
 		if adr:
-			self.assertEqual(adr.getCommand(), ActuatorData.COMMAND_ON)
+			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_ON)
 			self.assertEqual(adr.getStatusCode(), 0)
 			logging.info("ActuatorData: " + str(adr))
 			
@@ -65,11 +66,10 @@ class HumidifierEmulatorTaskTest(unittest.TestCase):
 			
 		ad.setValue(35.0)
 		
-		self.assertTrue(self.huSimTask.updateActuator(ad))
-		adr = self.huSimTask.getLatestActuatorResponse()
+		adr = self.huSimTask.updateActuator(ad)
 		
 		if adr:
-			self.assertEqual(adr.getCommand(), ActuatorData.COMMAND_ON)
+			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_ON)
 			self.assertEqual(adr.getStatusCode(), 0)
 			logging.info("ActuatorData: " + str(adr))
 			
@@ -77,13 +77,12 @@ class HumidifierEmulatorTaskTest(unittest.TestCase):
 		else:
 			logging.warning("ActuatorData is None.")
 			
-		ad.setCommand(ActuatorData.COMMAND_OFF)
+		ad.setCommand(ConfigConst.COMMAND_OFF)
 		
-		self.assertTrue(self.huSimTask.updateActuator(ad))
-		adr = self.huSimTask.getLatestActuatorResponse()
+		adr = self.huSimTask.updateActuator(ad)
 		
 		if adr:
-			self.assertEqual(adr.getCommand(), ActuatorData.COMMAND_OFF)
+			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_OFF)
 			self.assertEqual(adr.getStatusCode(), 0)
 			logging.info("ActuatorData: " + str(adr))
 		else:

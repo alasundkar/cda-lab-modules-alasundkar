@@ -26,8 +26,9 @@ DEFAULT_MQTT_PORT        = 1883
 DEFAULT_MQTT_SECURE_PORT = 8883
 DEFAULT_KEEP_ALIVE       = 60
 DEFAULT_POLL_CYCLES      = 60
-DEFAULT_VAL              = 0.0
-DEFAULT_COMMAND          = 0
+DEFAULT_VAL              = 1
+DEFAULT_COMMAND          = 1
+DEFAULT_COMMAND_1        = 0
 DEFAULT_STATUS           = 0
 
 # for purposes of this library, float precision is more then sufficient

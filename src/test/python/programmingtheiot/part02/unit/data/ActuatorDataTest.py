@@ -13,6 +13,7 @@ import unittest
 import programmingtheiot.common.ConfigConst as ConfigConst
 
 from programmingtheiot.data.ActuatorData import ActuatorData
+from lib2to3.pgen2.tokenize import Ignore
 
 class ActuatorDataTest(unittest.TestCase):
 	"""
@@ -26,7 +27,7 @@ class ActuatorDataTest(unittest.TestCase):
 	DEFAULT_NAME = "ActuatorDataFooBar"
 	DEFAULT_STATE_DATA = "{state: None}"
 	DEFAULT_VALUE = 15.2
-	
+	#DEFAULT_VALUE= 0.0
 	@classmethod
 	def setUpClass(self):
 		logging.basicConfig(format = '%(asctime)s:%(module)s:%(levelname)s:%(message)s', level = logging.DEBUG)
@@ -39,16 +40,15 @@ class ActuatorDataTest(unittest.TestCase):
 		pass
 	
 	def testDefaultValues(self):
-		ad = ActuatorData()
-		
+		ad = ActuatorData()		
 		self.assertEquals(ad.getCommand(), ConfigConst.DEFAULT_COMMAND)
-		self.assertEquals(ad.getStatusCode(), ConfigConst.DEFAULT_STATUS)
-		
+		self.assertEquals(ad.getStatusCode(), ConfigConst.DEFAULT_STATUS)		
 		logging.info("Actuator data as string: " + str(ad))
 
 	def testParameterUpdates(self):
 		ad = self._createTestActuatorData()
-		
+		print("testParameterUpdates")
+		print(ad)
 		self.assertEquals(ad.getName(), self.DEFAULT_NAME)
 		self.assertEquals(ad.getCommand(), ConfigConst.COMMAND_ON)
 		self.assertEquals(ad.getStateData(), self.DEFAULT_STATE_DATA)
@@ -59,11 +59,13 @@ class ActuatorDataTest(unittest.TestCase):
 		ad2 = self._createTestActuatorData()
 		
 		ad.updateData(ad2)
+		print("testFullUpdate:")
+		print(ad)
 		
 		self.assertEquals(ad.getCommand(), ConfigConst.COMMAND_ON)
 		self.assertEquals(ad.getStateData(), self.DEFAULT_STATE_DATA)
 		self.assertEquals(ad.getValue(), self.DEFAULT_VALUE)
-		
+
 	def _createTestActuatorData(self):
 		ad = ActuatorData()
 		

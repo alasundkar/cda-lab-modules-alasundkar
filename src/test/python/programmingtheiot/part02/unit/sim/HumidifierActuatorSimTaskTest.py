@@ -9,7 +9,7 @@
 
 import logging
 import unittest
-
+import programmingtheiot.common.ConfigConst as ConfigConst
 from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.cda.sim.HumidifierActuatorSimTask import HumidifierActuatorSimTask
 
@@ -37,8 +37,8 @@ class HumidifierActuatorSimTaskTest(unittest.TestCase):
 		pass
 
 	def testUpdateActuator(self):
-		ad = ActuatorData(actuatorType = ActuatorData.HUMIDIFIER_ACTUATOR_TYPE)
-		ad.setCommand(ActuatorData.COMMAND_ON)
+		ad = ActuatorData(typeID = ConfigConst.HUMIDIFIER_ACTUATOR_TYPE)
+		ad.setCommand(ConfigConst.COMMAND_ON)
 		ad.setValue(self.DEFAULT_VAL_A)
 		self.assertTrue(self.hSimTask.updateActuator(ad))
 		adr = self.hSimTask.getLatestActuatorResponse()
@@ -55,12 +55,12 @@ class HumidifierActuatorSimTaskTest(unittest.TestCase):
 		self.assertEquals(adr.getValue(), self.DEFAULT_VAL_B)
 		logging.info("ActuatorData: " + str(adr))
 		
-		ad.setCommand(ActuatorData.COMMAND_OFF)
+		ad.setCommand(ConfigConst.COMMAND_OFF)
 		self.assertTrue(self.hSimTask.updateActuator(ad))
 		adr = self.hSimTask.getLatestActuatorResponse()
 		
 		self.assertIsNotNone(adr)
-		self.assertEquals(adr.getCommand(), ActuatorData.COMMAND_OFF)
+		self.assertEquals(adr.getCommand(), ConfigConst.COMMAND_OFF)
 		logging.info("ActuatorData: " + str(adr))
 			
 if __name__ == "__main__":

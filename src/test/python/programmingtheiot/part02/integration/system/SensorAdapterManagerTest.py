@@ -12,6 +12,8 @@ import unittest
 
 from time import sleep
 
+import programmingtheiot.common.ConfigConst as ConfigConst
+
 from programmingtheiot.common.DefaultDataMessageListener import DefaultDataMessageListener
 from programmingtheiot.cda.system.SensorAdapterManager import SensorAdapterManager
 

@@ -10,6 +10,8 @@
 import logging
 import unittest
 
+import programmingtheiot.common.ConfigConst as ConfigConst
+
 from programmingtheiot.cda.sim.HumiditySensorSimTask import HumiditySensorSimTask
 
 class HumiditySensorSimTaskTest(unittest.TestCase):
@@ -45,7 +47,7 @@ class HumiditySensorSimTaskTest(unittest.TestCase):
 	def testGetTelemetryValue(self):
 		val = self.hSimTask.getTelemetryValue()
 		logging.info("Humidity data: %f", val)
-		self.assertGreater(val, 0.0)
+		self.assertGreater(val, ConfigConst.DEFAULT_VAL)
 
 if __name__ == "__main__":
 	unittest.main()

@@ -33,14 +33,6 @@ class SystemCpuUtilTaskTest(unittest.TestCase):
 	def tearDown(self):
 		pass
 
-	@unittest.skip("Ignore for now.")
-	def testGenerateTelemetry(self):
-		sd = self.cpuUtilTask.generateTelemetry()
-		
-		self.assertIsNotNone(sd)
-		self.assertGreaterEqual(sd.getValue(), 0.0)
-		logging.info("CPU utilization SensorData: %s", str(sd))
-			
 	def testGetTelemetryValue(self):
 		val = self.cpuUtilTask.getTelemetryValue()
 		
