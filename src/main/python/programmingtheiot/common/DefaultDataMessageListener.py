@@ -40,7 +40,7 @@ class DefaultDataMessageListener(IDataMessageListener):
 		@param data The ActuatorData message received.
 		@return bool True on success; False otherwise.
 		"""
-		if data:
+		if data :
 			logging.info('Actuator Command: ' + str(data.getCommand()))
 			
 		return True

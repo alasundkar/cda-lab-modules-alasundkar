@@ -12,7 +12,7 @@ import logging
 from time import sleep
 
 import programmingtheiot.common.ConfigConst as ConfigConst
-
+from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.common.ConfigUtil import ConfigUtil
 from programmingtheiot.cda.sim.BaseActuatorSimTask import BaseActuatorSimTask
 
@@ -25,11 +25,36 @@ class HvacEmulatorTask(BaseActuatorSimTask):
 	"""
 
 	def __init__(self):
-		pass
-
+		super(HvacEmulatorTask, self).__init__(typeID = ActuatorData.HVAC_ACTUATOR_TYPE, simpleName = "HVAC")
+		'''
+		Created an object to enable emulation.
+		'''
+		self.sh = SenseHAT(emulate = True)
+		
+# 	def _activateActuator(self, val: float = ConfigConst.DEFAULT_VAL, stateData: str = None) -> int:
+# 		pass
+# 
+# 	def _deactivateActuator(self, val: float = ConfigConst.DEFAULT_VAL, stateData: str = None) -> int:
+# 		pass
 	def _activateActuator(self, val: float = ConfigConst.DEFAULT_VAL, stateData: str = None) -> int:
-		pass
+		if self.sh.screen:
+			msg = self.getSimpleName() + ' ON: ' + str(val) + 'C'
+			self.sh.screen.scroll_text(msg)
+			return 0
+		else:
+			logging.warning("No SenseHAT LED screen instance to write.")
+			return -1
 
 	def _deactivateActuator(self, val: float = ConfigConst.DEFAULT_VAL, stateData: str = None) -> int:
-		pass
+		if self.sh.screen:
+			msg = self.getSimpleName() + ' OFF'
+			self.sh.screen.scroll_text(msg)
+			
+			sleep(5)
+			
+			self.sh.screen.clear()
+			return 0
+		else:
+			logging.warning("No SenseHAT LED screen instance to clear / close.")
+			return -1
 	

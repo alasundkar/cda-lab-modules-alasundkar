@@ -61,7 +61,7 @@ class BaseActuatorSimTask():
 		return self.latestActuatorData 
 	
 	def getSimpleName(self) -> str:
-		pass
+		return self.simpleName
 	
 	def updateActuator(self, data: ActuatorData) -> bool:
 		"""

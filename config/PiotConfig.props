@@ -36,12 +36,12 @@ enableCrypt    = False
 #
 [ConstrainedDevice]
 deviceLocationID = constraineddevice001
-enableEmulator   = False
+enableEmulator   = True
 enableSenseHAT   = False
 enableMqttClient = False
 enableCoapClient = False
 enableLogging    = True
-pollCycleSecs    = 60
+pollCycleSecs    = 10
 testGdaDataPath  = /tmp/gda-data
 testCdaDataPath  = /tmp/cda-data
 

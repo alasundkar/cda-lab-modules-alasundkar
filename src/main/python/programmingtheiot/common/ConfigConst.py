@@ -79,7 +79,7 @@ ACTUATOR_RESPONSE = 'ActuatorResponse'
 MGMT_STATUS_MSG   = 'MgmtStatusMsg'
 MGMT_STATUS_CMD   = 'MgmtStatusCmd'
 SENSOR_MSG        = 'SensorMsg'
-SYSTEM_PERF_MSG   = 'SystemPerfMsg'
+SYSTEM_PERF_MSG   = 'SystemPerformance'
 
 LED_ACTUATOR_NAME        = 'LedActuator'
 HUMIDIFIER_ACTUATOR_NAME = 'HumidifierActuator'
@@ -139,6 +139,7 @@ COAP    = 'Coap'
 OPCUA   = 'Opcua'
 SMTP    = 'Smtp'
 
+#DEVICE_LOCATION_ID_KEY = 'constraineddevice001'  //replace
 DEVICE_LOCATION_ID_KEY = 'deviceLocationID'
 
 CLOUD_GATEWAY_SERVICE = CLOUD   + '.' + GATEWAY_SERVICE

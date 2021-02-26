@@ -28,6 +28,14 @@ class ActuatorData(BaseIotData):
 
 	# for now, actuators will be 1..99
 	# and displays will be 100..1999
+
+	DEFAULT_ACTUATOR_TYPE = 0
+	
+	HVAC_ACTUATOR_TYPE = 1
+	HUMIDIFIER_ACTUATOR_TYPE = 2
+	LED_DISPLAY_ACTUATOR_TYPE = 100
+	DEFAULT_STATE_DATA = "{state: None}"
+	actuatorType = None
 #	DEFAULT_ACTUATOR_TYPE = 0
 
 	def __init__(self, typeID: int = ConfigConst.DEFAULT_ACTUATOR_TYPE, name = ConfigConst.NOT_SET, d = None):
