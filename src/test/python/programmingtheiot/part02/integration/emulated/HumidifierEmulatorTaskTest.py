@@ -51,8 +51,9 @@ class HumidifierEmulatorTaskTest(unittest.TestCase):
 		ad = ActuatorData(typeID = ConfigConst.HUMIDIFIER_ACTUATOR_TYPE)
 		ad.setCommand(ConfigConst.COMMAND_ON)
 		ad.setValue(50.0)
-		
-		adr = self.huSimTask.updateActuator(ad)
+		self.assertTrue(self.huSimTask.updateActuator(ad))
+		adr = self.huSimTask.getLatestActuatorResponse()
+		#adr = self.huSimTask.updateActuator(ad)
 		
 		if adr:
 			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_ON)
@@ -65,8 +66,9 @@ class HumidifierEmulatorTaskTest(unittest.TestCase):
 			logging.warning("ActuatorData is None.")
 			
 		ad.setValue(35.0)
-		
-		adr = self.huSimTask.updateActuator(ad)
+		self.assertTrue(self.huSimTask.updateActuator(ad))
+		adr = self.huSimTask.getLatestActuatorResponse()
+		#adr = self.huSimTask.updateActuator(ad)
 		
 		if adr:
 			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_ON)
@@ -78,8 +80,9 @@ class HumidifierEmulatorTaskTest(unittest.TestCase):
 			logging.warning("ActuatorData is None.")
 			
 		ad.setCommand(ConfigConst.COMMAND_OFF)
-		
-		adr = self.huSimTask.updateActuator(ad)
+		self.assertTrue(self.huSimTask.updateActuator(ad))
+		adr = self.huSimTask.getLatestActuatorResponse()
+		#adr = self.huSimTask.updateActuator(ad)
 		
 		if adr:
 			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_OFF)

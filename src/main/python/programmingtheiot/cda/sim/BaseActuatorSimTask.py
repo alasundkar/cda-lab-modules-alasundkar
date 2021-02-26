@@ -115,8 +115,8 @@ class BaseActuatorSimTask():
 				statusCode = self._deactivateActuator(val = data.getValue(), stateData = data.getStateData())
 				statusCode = 0
 			self.latestActuatorData = data
-# 			self.latestActuatorData.setStatusCode(0)
-# 			self.latestActuatorData.setAsResponse()
+			self.latestActuatorData.setStatusCode(0)
+			self.latestActuatorData.setAsResponse()
 			
 			actuatorResponse = ActuatorData()
 			actuatorResponse.updateData(data)

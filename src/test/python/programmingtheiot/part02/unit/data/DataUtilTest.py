@@ -55,28 +55,24 @@ class DataUtilTest(unittest.TestCase):
 	def tearDown(self):
 		pass
 	
-	@Ignore
 	#@unittest.skip("Ignore for now.")
 	def testActuatorDataConversionsFromJson(self):
 		logging.info("\n\n----- [ActuatorData Conversions from JSON] -----")
  		
 		self.assertIsNone(self.dataUtil.jsonToActuatorData(None))
- 		
+		
 		self.assertIsNone(self.dataUtil.jsonToActuatorData(""))
 		adObjFromJava = self.dataUtil.jsonToActuatorData(self.sampleAd2Json)
- 		
+		
 		adObj1    = self.dataUtil.jsonToActuatorData(self.sampleAdJson)
 		adObj1Str = self.dataUtil.actuatorDataToJson(adObj1)
 		adObj2    = self.dataUtil.jsonToActuatorData(adObj1Str)
- 
-# 		logging.info("Sample JSON: " + str(self.sampleAdJson))
-# 		logging.info("JSON to ActuatorData: " + str(adObj1))
-# 		logging.info("ActuatorData back to JSON: " + str(adObj1Str))		
- 
-		logging.info("Sample JSON: " )
-		logging.info("JSON to ActuatorData: " )
-		logging.info("ActuatorData back to JSON: ")
- 		
+
+		logging.info("Sample JSON: " + str(self.sampleAdJson))
+		logging.info("JSON to ActuatorData: " + str(adObj1))
+		logging.info("ActuatorData back to JSON: " + str(adObj1Str))		
+
+		
 		self.assertEqual(self.adName, adObj1.getName())
 		self.assertEqual(self.adName, adObj2.getName())
 		self.assertEqual(adObj1.getTimeStamp(), adObj2.getTimeStamp())
@@ -93,14 +89,11 @@ class DataUtilTest(unittest.TestCase):
 		adObj2    = self.dataUtil.jsonToActuatorData(adObj1Str)
 		adObj2Str = self.dataUtil.actuatorDataToJson(adObj2)
 
-		logging.info("Sample ActuatorData: " )
-		logging.info("ActuatorData to JSON: " )
-		logging.info("JSON back to ActuatorData: " )
-		logging.info("ActuatorData back to JSON: " )
-# 		logging.info("Sample ActuatorData: " + str(adObj1))
-# 		logging.info("ActuatorData to JSON: " + str(adObj1Str))
-# 		logging.info("JSON back to ActuatorData: " + str(adObj2))
-# 		logging.info("ActuatorData back to JSON: " + str(adObj2Str))
+
+		logging.info("Sample ActuatorData: " + str(adObj1))
+		logging.info("ActuatorData to JSON: " + str(adObj1Str))
+		logging.info("JSON back to ActuatorData: " + str(adObj2))
+		logging.info("ActuatorData back to JSON: " + str(adObj2Str))
 
 		self.assertEqual(adName, adObj1.getName())
 		self.assertEqual(adObj1.getName(), adObj2.getName())
@@ -115,12 +108,10 @@ class DataUtilTest(unittest.TestCase):
 		sdObj1Str = self.dataUtil.sensorDataToJson(sdObj1)
 		sdObj2    = self.dataUtil.jsonToSensorData(sdObj1Str)
 
-		logging.info("Sample JSON: " )
-		logging.info("JSON to SensorData: " )
-		logging.info("SensorData back to JSON: " )		
-# 		logging.info("Sample JSON: " + str(self.sampleSdJson))
-# 		logging.info("JSON to SensorData: " + str(sdObj1))
-# 		logging.info("SensorData back to JSON: " + str(sdObj1Str))
+	
+		logging.info("Sample JSON: " + str(self.sampleSdJson))
+		logging.info("JSON to SensorData: " + str(sdObj1))
+		logging.info("SensorData back to JSON: " + str(sdObj1Str))
 		
 		self.assertEqual(self.sdName, sdObj1.getName())
 		self.assertEqual(self.sdName, sdObj2.getName())
@@ -138,14 +129,11 @@ class DataUtilTest(unittest.TestCase):
 		sdObj2    = self.dataUtil.jsonToSensorData(sdObj1Str)
 		sdObj2Str = self.dataUtil.sensorDataToJson(sdObj2)
 
-		logging.info("Sample SensorData: " )
-		logging.info("SensorData to JSON: " )
-		logging.info("JSON back to SensorData: ")
-		logging.info("SensorData back to JSON: " )		
-# 		logging.info("Sample SensorData: " + str(sdObj1))
-# 		logging.info("SensorData to JSON: " + str(sdObj1Str))
-# 		logging.info("JSON back to SensorData: " + str(sdObj2))
-# 		logging.info("SensorData back to JSON: " + str(sdObj2Str))
+	
+		logging.info("Sample SensorData: " + str(sdObj1))
+		logging.info("SensorData to JSON: " + str(sdObj1Str))
+		logging.info("JSON back to SensorData: " + str(sdObj2))
+		logging.info("SensorData back to JSON: " + str(sdObj2Str))
 
 		self.assertEqual(sdName, sdObj1.getName())
 		self.assertEqual(sdObj1.getName(), sdObj2.getName())
