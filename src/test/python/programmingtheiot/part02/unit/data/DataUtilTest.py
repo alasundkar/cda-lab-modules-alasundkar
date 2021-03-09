@@ -9,12 +9,13 @@
 
 import logging
 import unittest
-
+global str
 from programmingtheiot.data.DataUtil import DataUtil
 
 from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.data.SensorData import SensorData
 from programmingtheiot.data.SystemPerformanceData import SystemPerformanceData
+from lib2to3.pgen2.tokenize import Ignore
 
 class DataUtilTest(unittest.TestCase):
 	"""
@@ -57,7 +58,7 @@ class DataUtilTest(unittest.TestCase):
 	#@unittest.skip("Ignore for now.")
 	def testActuatorDataConversionsFromJson(self):
 		logging.info("\n\n----- [ActuatorData Conversions from JSON] -----")
-		
+ 		
 		self.assertIsNone(self.dataUtil.jsonToActuatorData(None))
 		
 		self.assertIsNone(self.dataUtil.jsonToActuatorData(""))
@@ -69,7 +70,8 @@ class DataUtilTest(unittest.TestCase):
 
 		logging.info("Sample JSON: " + str(self.sampleAdJson))
 		logging.info("JSON to ActuatorData: " + str(adObj1))
-		logging.info("ActuatorData back to JSON: " + str(adObj1Str))
+		logging.info("ActuatorData back to JSON: " + str(adObj1Str))		
+
 		
 		self.assertEqual(self.adName, adObj1.getName())
 		self.assertEqual(self.adName, adObj2.getName())
@@ -86,6 +88,7 @@ class DataUtilTest(unittest.TestCase):
 		adObj1Str = self.dataUtil.actuatorDataToJson(adObj1)
 		adObj2    = self.dataUtil.jsonToActuatorData(adObj1Str)
 		adObj2Str = self.dataUtil.actuatorDataToJson(adObj2)
+
 
 		logging.info("Sample ActuatorData: " + str(adObj1))
 		logging.info("ActuatorData to JSON: " + str(adObj1Str))
@@ -104,7 +107,8 @@ class DataUtilTest(unittest.TestCase):
 		sdObj1    = self.dataUtil.jsonToSensorData(self.sampleSdJson)
 		sdObj1Str = self.dataUtil.sensorDataToJson(sdObj1)
 		sdObj2    = self.dataUtil.jsonToSensorData(sdObj1Str)
-		
+
+	
 		logging.info("Sample JSON: " + str(self.sampleSdJson))
 		logging.info("JSON to SensorData: " + str(sdObj1))
 		logging.info("SensorData back to JSON: " + str(sdObj1Str))
@@ -124,7 +128,8 @@ class DataUtilTest(unittest.TestCase):
 		sdObj1Str = self.dataUtil.sensorDataToJson(sdObj1)
 		sdObj2    = self.dataUtil.jsonToSensorData(sdObj1Str)
 		sdObj2Str = self.dataUtil.sensorDataToJson(sdObj2)
-		
+
+	
 		logging.info("Sample SensorData: " + str(sdObj1))
 		logging.info("SensorData to JSON: " + str(sdObj1Str))
 		logging.info("JSON back to SensorData: " + str(sdObj2))

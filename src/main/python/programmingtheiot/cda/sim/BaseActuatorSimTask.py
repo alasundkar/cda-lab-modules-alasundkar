@@ -61,7 +61,7 @@ class BaseActuatorSimTask():
 		return self.latestActuatorData 
 	
 	def getSimpleName(self) -> str:
-		pass
+		return self.simpleName
 	
 	def updateActuator(self, data: ActuatorData) -> bool:
 		"""
@@ -115,8 +115,8 @@ class BaseActuatorSimTask():
 				statusCode = self._deactivateActuator(val = data.getValue(), stateData = data.getStateData())
 				statusCode = 0
 			self.latestActuatorData = data
-# 			self.latestActuatorData.setStatusCode(0)
-# 			self.latestActuatorData.setAsResponse()
+			self.latestActuatorData.setStatusCode(0)
+			self.latestActuatorData.setAsResponse()
 			
 			actuatorResponse = ActuatorData()
 			actuatorResponse.updateData(data)

@@ -51,8 +51,9 @@ class HvacEmulatorTaskTest(unittest.TestCase):
 		ad = ActuatorData(typeID = ConfigConst.HVAC_ACTUATOR_TYPE)
 		ad.setCommand(ConfigConst.COMMAND_ON)
 		ad.setValue(22.0)
-		
-		adr = self.hvSimTask.updateActuator(ad)
+		self.assertTrue(self.hvSimTask.updateActuator(ad))
+		adr = self.hvSimTask.getLatestActuatorResponse()
+		#adr = self.hvSimTask.updateActuator(ad)
 		
 		if adr:
 			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_ON)
@@ -65,8 +66,9 @@ class HvacEmulatorTaskTest(unittest.TestCase):
 			logging.warning("ActuatorData is None.")
 			
 		ad.setValue(20.0)
-		
-		adr = self.hvSimTask.updateActuator(ad)
+		self.assertTrue(self.hvSimTask.updateActuator(ad))
+		adr = self.hvSimTask.getLatestActuatorResponse()
+		#adr = self.hvSimTask.updateActuator(ad)
 		
 		if adr:
 			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_ON)
@@ -78,8 +80,9 @@ class HvacEmulatorTaskTest(unittest.TestCase):
 			logging.warning("ActuatorData is None.")
 			
 		ad.setCommand(ConfigConst.COMMAND_OFF)
-		
-		adr = self.hvSimTask.updateActuator(ad)
+		self.assertTrue(self.hvSimTask.updateActuator(ad))
+		adr = self.hvSimTask.getLatestActuatorResponse()
+		#adr = self.hvSimTask.updateActuator(ad)
 		
 		if adr:
 			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_OFF)

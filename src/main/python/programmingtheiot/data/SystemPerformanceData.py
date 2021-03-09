@@ -17,9 +17,15 @@ class SystemPerformanceData(BaseIotData):
 	Shell representation of class for student implementation.
 	
 	"""
-	cpuUtil = ConfigConst.DEFAULT_VAL
-	diskUtil = 0.0
-	memUtil = ConfigConst.DEFAULT_VAL
+	#CPU_Utilization = 0.0
+	CPU_Utilization = 1
+	Disk_Utilization = 1
+	Memory_Utilization = 1
+# 	Disk_Utilization = 0.0
+# 	Memory_Utilization = 0.0
+	#cpuUtil = ConfigConst.DEFAULT_VAL
+	#diskUtil = 0.0
+	#memUtil = ConfigConst.DEFAULT_VAL
 	DEFAULT_VAL = 0.0
 	
 	def __init__(self, d = None):

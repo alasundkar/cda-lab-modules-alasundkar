@@ -41,8 +41,9 @@ class SensorAdapterManager(object):
 	
 	"""
 
-	def __init__(self):
+	def __init__(self,useEmulator: bool = False):
 #def __init__(self):  
+		#self.useEmulator = useEmulator
 		configUtil = ConfigUtil()
 		self.humiditySensorSimTask = HumiditySensorSimTask() 
 		self.pressureSensorSimTask = PressureSensorSimTask(self)
@@ -60,8 +61,28 @@ class SensorAdapterManager(object):
 
 		if self.useEmulator == True:
 			logging.info("Emulators will be used")
+			"""
+			Loading the Humidity Emulator
+			"""
+			humidityModule = __import__('programmingtheiot.cda.emulated.HumiditySensorEmulatorTask', fromlist = ['HumiditySensorEmulatorTask'])
+			heClazz = getattr(humidityModule, 'HumiditySensorEmulatorTask')
+			self.humidityEmulator = heClazz()
+			
+			"""
+			Loading the Pressure Emulator
+			"""
+			pressureModule = __import__('programmingtheiot.cda.emulated.PressureSensorEmulatorTask', fromlist = ['PressureSensorEmulatorTask'])
+			pressureAttribute = getattr(pressureModule, 'PressureSensorEmulatorTask')
+			self.pressureEmulator = pressureAttribute()
+			
+			"""
+			Loading the Temperature Emulator
+			"""
+			temperatureModule = __import__('programmingtheiot.cda.emulated.TemperatureSensorEmulatorTask', fromlist = ['TemperatureSensorEmulatorTask'])
+			temperatureAttribute = getattr(temperatureModule, 'TemperatureSensorEmulatorTask')
+			self.temperatureEmulator = temperatureAttribute()
 		else:
-			logging.info("Emulators will be used")
+			logging.info("Emulators will not be used")
 			self.dataGenerator = SensorDataGenerator()
 			configUtil = ConfigUtil()
 			tempFloor = configUtil.getFloat(section = ConfigConst.CONSTRAINED_DEVICE, key = ConfigConst.TEMP_SIM_FLOOR_KEY, defaultVal = SensorDataGenerator.LOW_NORMAL_INDOOR_TEMP)
@@ -80,10 +101,17 @@ class SensorAdapterManager(object):
 	"""		        
 	def handleTelemetry(self):
 		
-# 		if self.useEmulator == False:
+		if self.useEmulator == False:
 			humiditySensorData = self.humiditySensorSimTask.generateTelemetry()
 			pressureSensorData = self.pressureSensorSimTask.generateTelemetry()
 			temperatureSensorData = self.temperatureSensorSimTask.generateTelemetry()
+			self.dataMsgListener.handleSensorMessage(humiditySensorData)
+			self.dataMsgListener.handleSensorMessage(pressureSensorData)
+			self.dataMsgListener.handleSensorMessage(temperatureSensorData)
+		else:
+			humiditySensorData = self.humidityEmulator.generateTelemetry()
+			pressureSensorData = self.pressureEmulator.generateTelemetry()
+			temperatureSensorData = self.temperatureEmulator.generateTelemetry()
 			self.dataMsgListener.handleSensorMessage(humiditySensorData)
 			self.dataMsgListener.handleSensorMessage(pressureSensorData)
 			self.dataMsgListener.handleSensorMessage(temperatureSensorData)

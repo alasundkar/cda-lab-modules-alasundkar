@@ -50,11 +50,12 @@ class LedDisplayEmulatorTaskTest(unittest.TestCase):
 		pass
 
 	def testUpdateEmulator(self):
-		ad = ActuatorData(actuatorType = ConfigConst.LED_DISPLAY_ACTUATOR_TYPE)
+		ad = ActuatorData(typeID = ConfigConst.LED_DISPLAY_ACTUATOR_TYPE)
 		ad.setCommand(ConfigConst.COMMAND_ON)
 		ad.setStateData(self.HELLO_WORLD_A)
-		
-		adr = self.lddSimTask.updateActuator(ad)
+		self.assertTrue(self.lddSimTask.updateActuator(ad))
+		adr = self.lddSimTask.getLatestActuatorResponse()
+		#adr = self.lddSimTask.updateActuator(ad)
 		
 		if adr:
 			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_ON)
@@ -67,8 +68,9 @@ class LedDisplayEmulatorTaskTest(unittest.TestCase):
 			logging.warning("ActuatorData is None.")
 			
 		ad.setStateData(self.HELLO_WORLD_B)
-		
-		adr = self.lddSimTask.updateActuator(ad)
+		self.assertTrue(self.lddSimTask.updateActuator(ad))
+		adr = self.lddSimTask.getLatestActuatorResponse()
+	#	adr = self.lddSimTask.updateActuator(ad)
 		
 		if adr:
 			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_ON)
@@ -80,8 +82,9 @@ class LedDisplayEmulatorTaskTest(unittest.TestCase):
 			logging.warning("ActuatorData is None.")
 			
 		ad.setCommand(ConfigConst.COMMAND_OFF)
-		
-		adr = self.lddSimTask.updateActuator(ad)
+		self.assertTrue(self.lddSimTask.updateActuator(ad))
+		adr = self.lddSimTask.getLatestActuatorResponse()		
+		#adr = self.lddSimTask.updateActuator(ad)
 		
 		if adr:
 			self.assertEqual(adr.getCommand(), ConfigConst.COMMAND_OFF)
