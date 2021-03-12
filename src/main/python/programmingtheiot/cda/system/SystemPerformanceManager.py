@@ -12,10 +12,9 @@ import logging
 from apscheduler.schedulers.background import BackgroundScheduler
 
 import programmingtheiot.common.ConfigConst as ConfigConst
-
+from programmingtheiot.data.SystemPerformanceData import SystemPerformanceData 
 from programmingtheiot.common.ConfigUtil import ConfigUtil
 from programmingtheiot.common.IDataMessageListener import IDataMessageListener
-
 from programmingtheiot.cda.system.SystemCpuUtilTask import SystemCpuUtilTask
 from programmingtheiot.cda.system.SystemMemUtilTask import SystemMemUtilTask
 
@@ -46,7 +45,13 @@ class SystemPerformanceManager(object):
 		self.cpuUtilPct = self.cpuUtilTask.getTelemetryValue()
 		self.memUtilPct = self.memUtilTask.getTelemetryValue()
 		logging.info('CPU utilization is %s percent, and memory utilization is %s percent.', str(self.cpuUtilPct), str(self.memUtilPct))
+
+		sysPerfData = SystemPerformanceData()
+		#sysPerfData.setLocationID(self.locationID)
+		sysPerfData.setCpuUtilization(self.cpuUtilPct)
+		sysPerfData.setMemoryUtilization(self.memUtilPct)
 		
+				
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
 		pass
 	

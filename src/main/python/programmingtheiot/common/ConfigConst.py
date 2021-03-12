@@ -189,3 +189,11 @@ TEMP_SIM_CEILING_KEY     = 'tempSimCeiling'
 HANDLE_TEMP_CHANGE_ON_DEVICE_KEY = 'handleTempChangeOnDevice'
 TRIGGER_HVAC_TEMP_FLOOR_KEY      = 'triggerHvacTempFloor'
 TRIGGER_HVAC_TEMP_CEILING_KEY    = 'triggerHvacTempCeiling'
+
+DATA_GATEWAY_SERVICE = 'Data.GatewayService'
+
+#[Data.GatewayService]
+#credFile = ./cred/PiotPersistenceCred.props
+host = 'localhost'
+port = 6379
+enableCrypt = False
