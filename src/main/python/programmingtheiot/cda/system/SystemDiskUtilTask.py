@@ -12,6 +12,7 @@ import psutil
 import os
 import shutil 
 from programmingtheiot.cda.system.BaseSystemUtilTask import BaseSystemUtilTask
+from programmingtheiot.common import ConfigConst
 
 class SystemDiskUtilTask(BaseSystemUtilTask):
     """
@@ -25,7 +26,7 @@ class SystemDiskUtilTask(BaseSystemUtilTask):
         Initialization of class..
         
         """
-        super(SystemDiskUtilTask, self).__init__()
+        super(SystemDiskUtilTask, self).__init__(name=ConfigConst.DISK_UTIL_NAME, typeID=ConfigConst.DISK_UTIL_TYPE)
     
     def _getSystemUtil(self) -> float:
         """
@@ -34,8 +35,8 @@ class SystemDiskUtilTask(BaseSystemUtilTask):
         """
         cwd = os.getcwd()
         total, used, free = shutil.disk_usage(cwd)
-        cpu_per = used/total*100
+        disk_per = used/total*100
         #return shutil.disk_usage(cwd)
-        return cpu_per
+        return  round(disk_per,2)
         #pass
         

@@ -11,6 +11,8 @@ import logging
 import psutil
 
 from programmingtheiot.cda.system.BaseSystemUtilTask import BaseSystemUtilTask
+from programmingtheiot.common import ConfigConst
+
 
 class SystemMemUtilTask(BaseSystemUtilTask):
 	"""
@@ -24,7 +26,7 @@ class SystemMemUtilTask(BaseSystemUtilTask):
 		Initialization of class..
 		
 		"""
-		super(SystemMemUtilTask, self).__init__()
+		super(SystemMemUtilTask, self).__init__(name=ConfigConst.MEM_UTIL_NAME, typeID=ConfigConst.MEM_UTIL_TYPE)
 	
 	def _getSystemUtil(self) -> float:
 		"""

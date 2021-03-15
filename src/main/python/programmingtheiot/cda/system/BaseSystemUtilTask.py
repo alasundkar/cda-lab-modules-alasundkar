@@ -17,12 +17,14 @@ class BaseSystemUtilTask():
 	
 	"""
 	
-	def __init__(self, sensorName = ConfigConst.NOT_SET):
+	def __init__(self, name, typeID, sensorName = ConfigConst.NOT_SET):
 		###
 		# TODO: fill in the details here
 		self.latestSensorData = None
+		self.name=name
+		self.typeID=typeID
 		
-		pass
+		#pass
 	
 	def generateTelemetry(self) -> SensorData:
 		###
