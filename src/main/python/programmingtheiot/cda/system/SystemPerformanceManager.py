@@ -12,12 +12,12 @@ import logging
 from apscheduler.schedulers.background import BackgroundScheduler
 
 import programmingtheiot.common.ConfigConst as ConfigConst
-
+from programmingtheiot.data.SystemPerformanceData import SystemPerformanceData 
 from programmingtheiot.common.ConfigUtil import ConfigUtil
 from programmingtheiot.common.IDataMessageListener import IDataMessageListener
-
 from programmingtheiot.cda.system.SystemCpuUtilTask import SystemCpuUtilTask
 from programmingtheiot.cda.system.SystemMemUtilTask import SystemMemUtilTask
+from programmingtheiot.cda.system.SystemDiskUtilTask import SystemDiskUtilTask
 
 class SystemPerformanceManager(object):
 	"""
@@ -34,6 +34,7 @@ class SystemPerformanceManager(object):
 		"""
 		self.cpuUtilTask = SystemCpuUtilTask()
 		self.memUtilTask = SystemMemUtilTask()
+		self.diskUtilTask = SystemDiskUtilTask()
 		self.scheduler = BackgroundScheduler()
 		self.scheduler.add_job(self.handleTelemetry, 'interval', seconds = pollRate)
 
@@ -45,8 +46,18 @@ class SystemPerformanceManager(object):
 		#pass
 		self.cpuUtilPct = self.cpuUtilTask.getTelemetryValue()
 		self.memUtilPct = self.memUtilTask.getTelemetryValue()
-		logging.info('CPU utilization is %s percent, and memory utilization is %s percent.', str(self.cpuUtilPct), str(self.memUtilPct))
+		self.diskUtilPct = self.diskUtilTask.getTelemetryValue()
+		logging.info('CPU utilization is %s percent,', str(self.cpuUtilPct))
+		logging.info('Mem utilization is %s percent, ',str(self.memUtilPct))
+		logging.info('Disk utilization is %s percent,', self.diskUtilPct)
+
+		sysPerfData = SystemPerformanceData()
+		#sysPerfData.setLocationID(self.locationID)
+		sysPerfData.setCpuUtilization(self.cpuUtilPct)
+		sysPerfData.setMemoryUtilization(self.memUtilPct)
+		sysPerfData.setDiskUtilization(self.diskUtilPct)
 		
+				
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
 		pass
 	
