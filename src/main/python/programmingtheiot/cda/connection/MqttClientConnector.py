@@ -103,7 +103,7 @@ class MqttClientConnector(IPubSubClient):
 		logging.info('onMessage has been called')
 			
 	def onPublish(self, client, userdata, mid):
-		logging.info('onPublish has been called with message id : ' + mid)
+		logging.info('onPublish has been called with message id : ' + str(mid))
 	
 	def onSubscribe(self, client, userdata, mid, granted_qos):
 		logging.info('onSubscribe has been called with message id : ' + str(mid))
