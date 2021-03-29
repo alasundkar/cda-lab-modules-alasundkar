@@ -32,10 +32,14 @@ class DeviceDataManager(IDataMessageListener):
 	Shell representation of class for student implementation.
 	
 	"""
+	enableMqtt = None
+	enableMqttClient = None
+	mqttClient = None
 	
 	def __init__(self):
 		self.configUtil = ConfigUtil()
 		self.dataUtil = DataUtil()
+		self.enableMqtt = ConfigConst.ENABLE_MQTT_CLIENT_KEY
 		"""
 		Initializes sensor,actuator, system performance managers
 	
@@ -53,7 +57,8 @@ class DeviceDataManager(IDataMessageListener):
 		self.handleTempChangeOnDevice = self.configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.HANDLE_TEMP_CHANGE_ON_DEVICE_KEY)
 		self.triggerHvacTempFloor = self.configUtil.getFloat(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.TRIGGER_HVAC_TEMP_FLOOR_KEY)
 		self.triggerHvacTempCeiling = self.configUtil.getFloat(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.TRIGGER_HVAC_TEMP_CEILING_KEY);
-
+		if self.enableMqtt is True:
+			self.mqttClient = MqttClientConnector()
 		
 	def handleActuatorCommandMessage(self, data: ActuatorData) -> bool:
 		if data:
@@ -110,6 +115,9 @@ class DeviceDataManager(IDataMessageListener):
 		logging.info("Device Data Manager is starting...")
 		self.sensorAdapterManager.startManager()
 		self.systemPerformanceManager.startManager()
+		if self.mqttClient is not None:
+			self.mqttClient.connectClient()
+			self.mqttClient.subscribeToTopic(resource=ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, qos=1)
 		
 	def stopManager(self):
 		"""
@@ -118,7 +126,9 @@ class DeviceDataManager(IDataMessageListener):
 		logging.info("Device Data Manager is stopping...")
 		self.sensorAdapterManager.stopManager()
 		self.systemPerformanceManager.stopManager()
-		
+		if self.mqttClient is not None:
+			self.mqttClient.unsubscribeFromTopic(resource=ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE)
+			self.mqttClient.disconnectClient()
 	def _handleIncomingDataAnalysis(self, msg: str):
 		"""
 		Call this from handleIncomeMessage() to determine if there's
