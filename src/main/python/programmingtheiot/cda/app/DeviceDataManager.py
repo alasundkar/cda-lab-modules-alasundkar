@@ -33,12 +33,15 @@ class DeviceDataManager(IDataMessageListener):
 	
 	"""
 	enableMqtt = None
+	enableCoap = None
 	enableMqttClient = None
 	mqttClient = None
 	
-	def __init__(self):
+	def __init__(self, enableMqtt: bool = True, enableCoap: bool = False):
 		self.configUtil = ConfigUtil()
 		self.dataUtil = DataUtil()
+		self.enableCoap = enableCoap
+
 		self.enableMqtt = ConfigConst.ENABLE_MQTT_CLIENT_KEY
 		"""
 		Initializes sensor,actuator, system performance managers

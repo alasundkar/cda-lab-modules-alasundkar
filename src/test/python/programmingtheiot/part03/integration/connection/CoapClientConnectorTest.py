@@ -49,6 +49,14 @@ class CoapClientConnectorTest(unittest.TestCase):
 		pass
 
 	#@unittest.skip("Ignore for now.")
+	def testConnectAndGetCon(self):
+		self.coapClient.sendGetRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = True, timeout = 5)
+	
+	#@unittest.skip("Ignore for now.")
+	def testConnectAndGetNon(self):
+		self.coapClient.sendGetRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = False, timeout = 5)
+		
+	#@unittest.skip("Ignore for now.")
 	def testConnectAndPost(self):
 		self.coapClient.sendPostRequest(ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE)
 		pass
@@ -58,6 +66,34 @@ class CoapClientConnectorTest(unittest.TestCase):
 		self.coapClient.sendPutRequest(ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE)
 		pass
 
+	#@unittest.skip("Ignore for now.")
+	def testConnectAndPutCon(self):
+		msg = "This is a test."
+		self.coapClient.sendPutRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, payload = msg, enableCON = True, timeout = 5)
+	
+	#@unittest.skip("Ignore for now.")
+	def testConnectAndPutNon(self):
+		msg = "This is a test."
+		self.coapClient.sendPutRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, payload = msg, enableCON = False, timeout = 5)
+	#@unittest.skip("Ignore for now.")
+	def testConnectAndPostCon(self):
+		msg = "This is a test."
+		self.coapClient.sendPostRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, payload = msg, enableCON = True, timeout = 5)
+	
+	#@unittest.skip("Ignore for now.")
+	def testConnectAndPostNon(self):
+		msg = "This is a test."
+		self.coapClient.sendPostRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, payload = msg, enableCON = False, timeout = 5)
+
+	#@unittest.skip("Ignore for now.")
+	def testConnectAndDeleteCon(self):
+		self.coapClient.sendDeleteRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = True, timeout = 5)
+	
+	#@unittest.skip("Ignore for now.")
+	def testConnectAndDeleteNon(self):
+		self.coapClient.sendDeleteRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = False, timeout = 5)
+	
+	
 if __name__ == "__main__":
 	unittest.main()
 	
