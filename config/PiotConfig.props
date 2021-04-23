@@ -17,7 +17,7 @@ securePort     = 1884
 defaultQoS     = 0
 keepAlive      = 30
 enableAuth     = False
-enableCrypt    = False
+enableCrypt    = True
 
 #
 # CoAP client configuration information

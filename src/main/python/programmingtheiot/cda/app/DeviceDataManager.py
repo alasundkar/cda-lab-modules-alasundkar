@@ -8,21 +8,16 @@
 #
 
 import logging
-
+import programmingtheiot.common.ConfigConst as ConfigConst
 from programmingtheiot.cda.connection.CoapClientConnector import CoapClientConnector
 from programmingtheiot.cda.connection.MqttClientConnector import MqttClientConnector
-
 from programmingtheiot.cda.system.ActuatorAdapterManager import ActuatorAdapterManager
 from programmingtheiot.cda.system.SensorAdapterManager import SensorAdapterManager
 from programmingtheiot.cda.system.SystemPerformanceManager import SystemPerformanceManager
-
 from programmingtheiot.common.IDataMessageListener import IDataMessageListener
 from programmingtheiot.common.ResourceNameEnum import ResourceNameEnum
-import programmingtheiot.common.ConfigConst as ConfigConst
-
 from programmingtheiot.common.ConfigUtil import ConfigUtil
 from programmingtheiot.data.DataUtil import DataUtil
-
 from programmingtheiot.data.ActuatorData import ActuatorData
 from programmingtheiot.data.SensorData import SensorData
 from programmingtheiot.data.SystemPerformanceData import SystemPerformanceData
@@ -41,7 +36,6 @@ class DeviceDataManager(IDataMessageListener):
 		self.configUtil = ConfigUtil()
 		self.dataUtil = DataUtil()
 		self.enableCoap = enableCoap
-
 		self.enableMqtt = ConfigConst.ENABLE_MQTT_CLIENT_KEY
 		"""
 		Initializes sensor,actuator, system performance managers
@@ -66,12 +60,13 @@ class DeviceDataManager(IDataMessageListener):
 	def handleActuatorCommandMessage(self, data: ActuatorData) -> bool:
 		if data:
 			logging.info("Processing actuator command message.")
-			self.actuatorAdapterMgr.sendActuatorCommand(data)
+			self.actuatorAdapterManager.sendActuatorCommand(data)
 			logging.info("And the command message is:")
 			logging.info(self.dataUtil.actuatorDataToJson(data))
 			return True
-		else: 
-			False			
+		else:
+			logging.warning("Received invalid ActuatorData command message. Ignoring.")
+			return False			
 			
 	def handleActuatorCommandResponse(self, data: ActuatorData) -> bool:
 		"""
@@ -132,6 +127,7 @@ class DeviceDataManager(IDataMessageListener):
 		if self.mqttClient is not None:
 			self.mqttClient.unsubscribeFromTopic(resource=ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE)
 			self.mqttClient.disconnectClient()
+			
 	def _handleIncomingDataAnalysis(self, msg: str):
 		"""
 		Call this from handleIncomeMessage() to determine if there's
@@ -165,8 +161,7 @@ class DeviceDataManager(IDataMessageListener):
 				ad.setValue(self.triggerHvacTempFloor)    
 			else:      
 				ad.setCommand(ConfigConst.COMMAND_OFF)        
-				self.handleActuatorCommandMessage(ad)
-				
+				self.handleActuatorCommandMessage(ad)				
 		
 	def _handleUpstreamTransmission(self, resourceName: ResourceNameEnum, msg: str):
 		"""
@@ -176,3 +171,10 @@ class DeviceDataManager(IDataMessageListener):
 		2) Act on msg: If # 1 is true, send message upstream using one (or both) client connections.
 		"""
 		logging.debug("_handleUpstreamTransmission initiated...")
+		if self.enableMqtt is True:
+			logging.debug("_handleUpstreamTransmission mqttClient  publishMessage has been called")
+			logging.debug(resourceName.name)
+			self.mqttClient.publishMessage(resourceName, msg, 1)
+		if self.enableCoap is True:
+			logging.debug("_handleUpstreamTransmission coapClient  sendPostRequest has been called")
+			self.coapClient.sendPostRequest(resourceName, msg, 5)		
