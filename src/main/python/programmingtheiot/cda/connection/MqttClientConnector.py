@@ -141,7 +141,9 @@ class MqttClientConnector(IPubSubClient):
 		if qos < 0 or qos > 2:
 			qos = IPubSubClient.DEFAULT_QOS
 		logging.info('Message received is : ' + msg)
-		self.mqttClient.publish(resource.name, msg, qos)
+		msgInfo  = self.mc.publish(resource.value, msg, qos)
+		msgInfo.wait_for_publish()		
+		##self.mqttClient.publish(resource.name, msg, qos)
 		return True	
 		"""
 		subscribes to topic and returns true
