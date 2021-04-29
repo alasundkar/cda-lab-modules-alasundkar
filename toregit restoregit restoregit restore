@@ -1,0 +1,64 @@
+[1mdiff --git a/src/test/python/programmingtheiot/part03/integration/connection/CoapClientConnectorTest.py b/src/test/python/programmingtheiot/part03/integration/connection/CoapClientConnectorTest.py[m
+[1mindex 887cb60..c88515f 100644[m
+[1m--- a/src/test/python/programmingtheiot/part03/integration/connection/CoapClientConnectorTest.py[m
+[1m+++ b/src/test/python/programmingtheiot/part03/integration/connection/CoapClientConnectorTest.py[m
+[36m@@ -38,17 +38,17 @@[m [mclass CoapClientConnectorTest(unittest.TestCase):[m
+ 	def tearDown(self):[m
+ 		pass[m
+ [m
+[31m-	#@unittest.skip("Ignore for now.")[m
+[32m+[m	[32m@unittest.skip("Ignore for now.")[m
+ 	def testConnectAndGet(self):[m
+ 		self.coapClient.sendGetRequest(ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE)[m
+ 		pass[m
+ [m
+[31m-	#@unittest.skip("Ignore for now.")[m
+[32m+[m	[32m@unittest.skip("Ignore for now.")[m
+ 	def testConnectAndDelete(self):[m
+ 		self.coapClient.sendDeleteRequest(ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE)[m
+ 		pass[m
+ [m
+[31m-	#@unittest.skip("Ignore for now.")[m
+[32m+[m	[32m@unittest.skip("Ignore for now.")[m
+ 	def testConnectAndGetCon(self):[m
+ 		self.coapClient.sendGetRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = True, timeout = 5)[m
+ 	[m
+[36m@@ -56,17 +56,17 @@[m [mclass CoapClientConnectorTest(unittest.TestCase):[m
+ 	def testConnectAndGetNon(self):[m
+ 		self.coapClient.sendGetRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = False, timeout = 5)[m
+ 		[m
+[31m-	#@unittest.skip("Ignore for now.")[m
+[32m+[m	[32m@unittest.skip("Ignore for now.")[m
+ 	def testConnectAndPost(self):[m
+ 		self.coapClient.sendPostRequest(ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE)[m
+ 		pass[m
+ [m
+[31m-	#@unittest.skip("Ignore for now.")[m
+[32m+[m	[32m@unittest.skip("Ignore for now.")[m
+ 	def testConnectAndPut(self):[m
+ 		self.coapClient.sendPutRequest(ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE)[m
+ 		pass[m
+ [m
+[31m-	#@unittest.skip("Ignore for now.")[m
+[32m+[m	[32m@unittest.skip("Ignore for now.")[m
+ 	def testConnectAndPutCon(self):[m
+ 		msg = "This is a test."[m
+ 		self.coapClient.sendPutRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, payload = msg, enableCON = True, timeout = 5)[m
+[36m@@ -75,7 +75,7 @@[m [mclass CoapClientConnectorTest(unittest.TestCase):[m
+ 	def testConnectAndPutNon(self):[m
+ 		msg = "This is a test."[m
+ 		self.coapClient.sendPutRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, payload = msg, enableCON = False, timeout = 5)[m
+[31m-	#@unittest.skip("Ignore for now.")[m
+[32m+[m	[32m@unittest.skip("Ignore for now.")[m
+ 	def testConnectAndPostCon(self):[m
+ 		msg = "This is a test."[m
+ 		self.coapClient.sendPostRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, payload = msg, enableCON = True, timeout = 5)[m
+[36m@@ -85,7 +85,7 @@[m [mclass CoapClientConnectorTest(unittest.TestCase):[m
+ 		msg = "This is a test."[m
+ 		self.coapClient.sendPostRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, payload = msg, enableCON = False, timeout = 5)[m
+ [m
+[31m-	#@unittest.skip("Ignore for now.")[m
+[32m+[m	[32m@unittest.skip("Ignore for now.")[m
+ 	def testConnectAndDeleteCon(self):[m
+ 		self.coapClient.sendDeleteRequest(resource = ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, enableCON = True, timeout = 5)[m
+ 	[m

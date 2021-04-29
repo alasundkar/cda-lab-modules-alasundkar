@@ -84,7 +84,7 @@ def main():
 	sleep(65)
 	
 	# optionally stop the app - this can be removed if needed
-	cda.stopApp(0)
+	#cda.stopApp(0)
 
 if __name__ == '__main__':
 	"""

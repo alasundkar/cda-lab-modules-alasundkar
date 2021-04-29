@@ -91,7 +91,7 @@ class CoapClientConnector(IRequestResponseClient):
 	"""
 	def sendDeleteRequest(self, resource: ResourceNameEnum, enableCON = False, timeout: int = IRequestResponseClient.DEFAULT_TIMEOUT) -> bool:
 		logging.info("sendDeleteRequest has been called..")
-		if resource:
+		if resource :
 			logging.debug("Issuing DELETE with path: " + resource.value)
 			request = self.coapClient.mk_request(defines.Codes.DELETE, path = resource.value)
 			request.token = generate_random_token(2)

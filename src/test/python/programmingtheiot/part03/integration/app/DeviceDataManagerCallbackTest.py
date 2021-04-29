@@ -54,7 +54,7 @@ class DeviceDataManagerWithCommsTest(unittest.TestCase):
 		
 		actuatorData = ActuatorData(typeID = ConfigConst.HVAC_ACTUATOR_TYPE)
 		actuatorData.setCommand(ConfigConst.COMMAND_ON)
-		actuatorData.setStateData("This is a test.")
+		actuatorData.setStateData("This is a testStartAndStopManagerWithMqttAndCoap test.")
 		
 		ddMgr.handleActuatorCommandMessage(actuatorData)
 		

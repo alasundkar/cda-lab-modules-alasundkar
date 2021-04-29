@@ -90,7 +90,7 @@ class MqttClientConnector(IPubSubClient):
 			self.mqttClient.on_subscribe = self.onSubscribe
 			self.mqttClient.on_message = self.onMessage
 		
-		if not self.mqttClient.is_connected():
+	#	if not self.mqttClient.is_connected():
 			self.mqttClient.connect(self.host, self.port, self.keepAlive)
 			self.mqttClient.loop_start()
 			return True
@@ -141,7 +141,7 @@ class MqttClientConnector(IPubSubClient):
 		if qos < 0 or qos > 2:
 			qos = IPubSubClient.DEFAULT_QOS
 		logging.info('Message received is : ' + msg)
-		msgInfo  = self.mc.publish(resource.value, msg, qos)
+		msgInfo  = self.mqttClient.publish(resource.value, msg, qos)
 		msgInfo.wait_for_publish()		
 		##self.mqttClient.publish(resource.name, msg, qos)
 		return True	
@@ -166,7 +166,7 @@ class MqttClientConnector(IPubSubClient):
 		logging.info('unsubscribeToTopic has been called')
 		self.mqttClient.unsubscribe(resource.name, None)
 
-	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
+	def setDataMessageListener(self, listener: IDataMessageListener = None) -> bool:
 		if listener:
 			self.dataMsgListener = listener
 			return True	

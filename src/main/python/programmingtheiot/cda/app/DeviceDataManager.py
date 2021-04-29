@@ -27,7 +27,7 @@ class DeviceDataManager(IDataMessageListener):
 	Shell representation of class for student implementation.
 	
 	"""
-	enableMqtt = None
+	#enableMqtt = None
 	enableCoap = None
 	enableMqttClient = None
 	mqttClient = None
@@ -36,7 +36,9 @@ class DeviceDataManager(IDataMessageListener):
 		self.configUtil = ConfigUtil()
 		self.dataUtil = DataUtil()
 		self.enableCoap = enableCoap
-		self.enableMqtt = ConfigConst.ENABLE_MQTT_CLIENT_KEY
+		self.enableMqtt = enableMqtt
+		#self.enableMqtt = ConfigConst.ENABLE_MQTT_CLIENT_KEY
+		#self.enableMqtt = self.configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.ENABLE_MQTT_CLIENT_KEY )
 		"""
 		Initializes sensor,actuator, system performance managers
 	
@@ -115,6 +117,8 @@ class DeviceDataManager(IDataMessageListener):
 		self.systemPerformanceManager.startManager()
 		if self.mqttClient is not None:
 			self.mqttClient.connectClient()
+			logging.info("calling connectClient() DeviceDataManager...")
+
 			self.mqttClient.subscribeToTopic(resource=ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, qos=1)
 		
 	def stopManager(self):
