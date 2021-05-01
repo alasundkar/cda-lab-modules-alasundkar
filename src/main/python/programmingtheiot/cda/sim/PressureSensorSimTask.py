@@ -22,4 +22,5 @@ class PressureSensorSimTask(BaseSensorSimTask):
 
 	def __init__(self,dataSet=None):
 		super(PressureSensorSimTask, self).__init__(sensorType =ConfigConst.PRESSURE_SENSOR_TYPE, dataSet = dataSet, minVal = SensorDataGenerator.LOW_NORMAL_ENV_PRESSURE, maxVal = SensorDataGenerator.HI_NORMAL_ENV_PRESSURE, sensorName = ConfigConst.PRESSURE_SENSOR_NAME)
+		sensorName = ConfigConst.PRESSURE_SENSOR_NAME
 	

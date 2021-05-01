@@ -17,10 +17,7 @@ class SensorData(BaseIotData):
 	
 	"""
 	DEFAULT_VAL = 1	
-	#DEFAULT_VAL = 10.0
 	DEFAULT_SENSOR_TYPE = 0
-	# These are just sensor type samples - these can be changed however
-	# you'd like; you can also create an enum representing the values
 	HUMIDITY_SENSOR_TYPE = 1
 	PRESSURE_SENSOR_TYPE = 2
 	TEMP_SENSOR_TYPE = 3
@@ -32,7 +29,7 @@ class SensorData(BaseIotData):
 		if d:
 			self.sensorType = d['sensorType']
 			self.value = d['value']
-			self.name = d['name']
+			self.name = name
 		else:
 			self.sensorType = typeID
 			self.value = self.DEFAULT_VAL

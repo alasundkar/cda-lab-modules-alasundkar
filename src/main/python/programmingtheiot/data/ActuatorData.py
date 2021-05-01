@@ -43,6 +43,7 @@ class ActuatorData(BaseIotData):
 		self.command = ConfigConst.DEFAULT_COMMAND
 		self.stateData = None
 		self.value = ConfigConst.DEFAULT_VAL
+		self.name = name
 	
 	def getCommand(self) -> int:
 		return self.command

@@ -63,7 +63,7 @@ class BaseIotData(object):
 			
 		# always pull location ID from configuration file
 		self.locationID = ConfigUtil().getProperty(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.DEVICE_LOCATION_ID_KEY)
-		
+
 	def getElevation(self) -> float:
 		"""
 		Returns the elevation.

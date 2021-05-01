@@ -21,3 +21,4 @@ class HvacActuatorSimTask(BaseActuatorSimTask):
 
 	def __init__(self):
 		super(HvacActuatorSimTask, self).__init__(typeID = ConfigConst.HVAC_ACTUATOR_TYPE, name = ConfigConst.HVAC_ACTUATOR_NAME, simpleName = "HVAC")		
+		

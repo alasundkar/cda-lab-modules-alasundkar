@@ -17,7 +17,7 @@ configuration values or when default values may be needed.
 # General Names and Defaults
 #
 
-NOT_SET = 'Not Set'
+NOT_SET = 'NotTestSet'
 
 DEFAULT_HOST             = 'localhost'
 DEFAULT_COAP_PORT        = 5683

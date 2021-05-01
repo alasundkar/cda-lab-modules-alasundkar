@@ -26,6 +26,7 @@ class TemperatureSensorEmulatorTask(BaseSensorSimTask):
 	def __init__(self, dataSet = None):
 		super(TemperatureSensorEmulatorTask, self).__init__(sensorName = ConfigConst.TEMP_SENSOR_NAME, sensorType = ConfigConst.TEMP_SENSOR_TYPE, dataSet = dataSet, minVal = SensorDataGenerator.LOW_NORMAL_INDOOR_TEMP, maxVal = SensorDataGenerator.HI_NORMAL_INDOOR_TEMP)
 		configUtil = ConfigUtil()
+	#	self.name = ConfigConst.TEMP_SENSOR_NAME
 		self.enableEmulator = configUtil.getBoolean(ConfigConst.CONSTRAINED_DEVICE, ConfigConst.ENABLE_SENSE_HAT_KEY, False)
 		if self.enableEmulator:
 			enableEmulation = False

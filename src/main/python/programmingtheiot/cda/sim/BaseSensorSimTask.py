@@ -33,7 +33,7 @@ class BaseSensorSimTask():
 		#self.maxVal = maxVal
 		self.senseData = None
 		self.sensorName = sensorName
-		  
+		self.name = sensorName
 		self.useRandomizer = False    
 		self.latestSensorData = None
 		"""
@@ -49,7 +49,8 @@ class BaseSensorSimTask():
 		"""
 		generates sensor data and returns it
 		"""
-		self.senseData = SensorData( self.sensorType)
+	#	self.senseData = SensorData( self.sensorType)
+		self.senseData = SensorData(typeID = self.sensorType, name = self.name)
 		if self.useRandomizer:
 			self.senseData.setValue(random.randint(self.DEFAULT_MIN_VAL, self.DEFAULT_MAX_VAL))
 		else:

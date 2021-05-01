@@ -19,7 +19,7 @@ class TemperatureSensorSimTask(BaseSensorSimTask):
 	Shell representation of class for student implementation.
 	
 	"""
-
-	def __init__(self,dataSet=None):
-		super(TemperatureSensorSimTask, self).__init__( ConfigConst.TEMP_SENSOR_TYPE, dataSet = dataSet, minVal = SensorDataGenerator.LOW_NORMAL_INDOOR_TEMP, maxVal = SensorDataGenerator.HI_NORMAL_INDOOR_TEMP)
-	
+	sensorName = ConfigConst.TEMP_SENSOR_NAME
+	def __init__(self,dataSet=None, sensorName = ConfigConst.TEMP_SENSOR_NAME):
+		super(TemperatureSensorSimTask, self).__init__( ConfigConst.TEMP_SENSOR_TYPE, dataSet = dataSet, minVal = SensorDataGenerator.LOW_NORMAL_INDOOR_TEMP, maxVal = SensorDataGenerator.HI_NORMAL_INDOOR_TEMP, sensorName = ConfigConst.TEMP_SENSOR_NAME)	
+		sensorName = ConfigConst.TEMP_SENSOR_NAME

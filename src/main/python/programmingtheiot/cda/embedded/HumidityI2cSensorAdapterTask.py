@@ -21,6 +21,7 @@ class HumidityI2cSensorAdapterTask(BaseSensorSimTask):
 
 	def __init__(self):
 		super(HumidityI2cSensorAdapterTask, self).__init__(SensorData.HUMIDITY_SENSOR_TYPE, minVal = SensorDataGenerator.LOW_NORMAL_ENV_HUMIDITY, maxVal = SensorDataGenerator.HI_NORMAL_ENV_HUMIDITY)
+		
 # 		self.sensorType = SensorData.HUMIDITY_SENSOR_TYPE
 # 		# Example only: Read the spec for the SenseHAT humidity sensor to obtain the appropriate starting address, and use i2c-tools to verify.
 # 		self.humidAddr = 0x5F
