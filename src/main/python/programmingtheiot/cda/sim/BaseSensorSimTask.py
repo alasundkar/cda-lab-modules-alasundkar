@@ -22,7 +22,7 @@ class BaseSensorSimTask():
 	"""
 
 	DEFAULT_MIN_VAL = ConfigConst.DEFAULT_VAL
-	DEFAULT_MAX_VAL = 1000.0
+	DEFAULT_MAX_VAL = 100.0
 	currentDataSetIndex = 0
 
 	
