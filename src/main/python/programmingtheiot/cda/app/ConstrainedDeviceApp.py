@@ -35,7 +35,7 @@ class ConstrainedDeviceApp():
 #		self.sysPerfManager = SystemPerformanceManager()
 		
 		# TODO: implementation here
-
+  
 	def startApp(self):
 		"""
 		Start the CDA. Calls startManager() on the device data manager instance.

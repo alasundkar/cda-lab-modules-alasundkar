@@ -31,6 +31,9 @@ class BaseSystemUtilTask():
 		# TODO: fill in the details here
 		#
 		# NOTE: Use self._getSystemUtil() to retrieve the value from the sub-class
+		self.latestSensorData = SensorData(name = self.name)
+		self.latestSensorData.setValue(self._getSystemUtil())
+		return self.latestSensorData
 		pass
 		
 	def getTelemetryValue(self) -> float:
@@ -39,6 +42,8 @@ class BaseSystemUtilTask():
 		returns and logs Telemetry value from derived class _getSystemUtil .
 		
 		"""
+		if self.latestSensorData is None:
+			self.generateTelemetry()
 		val = self._getSystemUtil()
 		logging.info("Sub class name: %s Value of Telemetry is %s.", self.__class__.__name__, str(val))
 		return val

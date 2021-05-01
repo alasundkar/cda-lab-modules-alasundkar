@@ -120,6 +120,11 @@ class DeviceDataManager(IDataMessageListener):
 			logging.info("calling connectClient() DeviceDataManager...")
 
 			self.mqttClient.subscribeToTopic(resource=ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, qos=1)
+			self.mqttClient.subscribeToTopic(resource=ResourceNameEnum.CDA_SYSTEM_PERF_MSG_RESOURCE, qos=1)
+			self.mqttClient.subscribeToTopic(resource=ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, qos=1)
+			self.mqttClient.subscribeToTopic(resource=ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, qos=1)
+			self.mqttClient.subscribeToTopic(resource=ResourceNameEnum.CDA_MGMT_STATUS_CMD_RESOURCE, qos=1)
+
 		
 	def stopManager(self):
 		"""

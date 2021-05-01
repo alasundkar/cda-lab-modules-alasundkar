@@ -27,7 +27,7 @@ class SensorData(BaseIotData):
 		self.value = ConfigConst.DEFAULT_VAL
 
 		if d:
-			self.sensorType = d['sensorType']
+			self.sensorType = typeID
 			self.value = d['value']
 			self.name = name
 		else:
