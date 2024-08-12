@@ -6,7 +6,7 @@
 # implementation for the Programming the Internet of Things exercises,
 # and designed to be modified by the student as needed.
 #
-
+import logging
 import programmingtheiot.common.ConfigConst as ConfigConst
 
 from programmingtheiot.data.SensorData import SensorData
@@ -17,12 +17,14 @@ class BaseSystemUtilTask():
 	
 	"""
 	
-	def __init__(self, sensorName = ConfigConst.NOT_SET):
+	def __init__(self, name, typeID, sensorName = ConfigConst.NOT_SET):
 		###
 		# TODO: fill in the details here
 		self.latestSensorData = None
+		self.name=name
+		self.typeID=typeID
 		
-		pass
+		#pass
 	
 	def generateTelemetry(self) -> SensorData:
 		###
@@ -32,7 +34,14 @@ class BaseSystemUtilTask():
 		pass
 		
 	def getTelemetryValue(self) -> float:
-		pass
+		#pass
+		"""
+		returns and logs Telemetry value from derived class _getSystemUtil .
+		
+		"""
+		val = self._getSystemUtil()
+		logging.info("Sub class name: %s Value of Telemetry is %s.", self.__class__.__name__, str(val))
+		return val
 	
 	def _getSystemUtil(self) -> float:
 		"""

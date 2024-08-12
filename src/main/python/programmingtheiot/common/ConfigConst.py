@@ -26,8 +26,9 @@ DEFAULT_MQTT_PORT        = 1883
 DEFAULT_MQTT_SECURE_PORT = 8883
 DEFAULT_KEEP_ALIVE       = 60
 DEFAULT_POLL_CYCLES      = 60
-DEFAULT_VAL              = 0.0
-DEFAULT_COMMAND          = 0
+DEFAULT_VAL              = 1
+DEFAULT_COMMAND          = 1
+DEFAULT_COMMAND_1        = 0
 DEFAULT_STATUS           = 0
 
 # for purposes of this library, float precision is more then sufficient
@@ -78,7 +79,7 @@ ACTUATOR_RESPONSE = 'ActuatorResponse'
 MGMT_STATUS_MSG   = 'MgmtStatusMsg'
 MGMT_STATUS_CMD   = 'MgmtStatusCmd'
 SENSOR_MSG        = 'SensorMsg'
-SYSTEM_PERF_MSG   = 'SystemPerfMsg'
+SYSTEM_PERF_MSG   = 'SystemPerformance'
 
 LED_ACTUATOR_NAME        = 'LedActuator'
 HUMIDIFIER_ACTUATOR_NAME = 'HumidifierActuator'
@@ -138,6 +139,7 @@ COAP    = 'Coap'
 OPCUA   = 'Opcua'
 SMTP    = 'Smtp'
 
+#DEVICE_LOCATION_ID_KEY = 'constraineddevice001'  //replace
 DEVICE_LOCATION_ID_KEY = 'deviceLocationID'
 
 CLOUD_GATEWAY_SERVICE = CLOUD   + '.' + GATEWAY_SERVICE
@@ -187,3 +189,11 @@ TEMP_SIM_CEILING_KEY     = 'tempSimCeiling'
 HANDLE_TEMP_CHANGE_ON_DEVICE_KEY = 'handleTempChangeOnDevice'
 TRIGGER_HVAC_TEMP_FLOOR_KEY      = 'triggerHvacTempFloor'
 TRIGGER_HVAC_TEMP_CEILING_KEY    = 'triggerHvacTempCeiling'
+
+DATA_GATEWAY_SERVICE = 'Data.GatewayService'
+
+#[Data.GatewayService]
+#credFile = ./cred/PiotPersistenceCred.props
+host = 'localhost'
+port = 6379
+enableCrypt = False

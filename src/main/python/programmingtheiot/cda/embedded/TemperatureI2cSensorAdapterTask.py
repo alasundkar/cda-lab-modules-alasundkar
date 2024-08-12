@@ -7,18 +7,22 @@
 # and designed to be modified by the student as needed.
 #
 
+
 import logging
-
+#import smbus
 from programmingtheiot.data.SensorData import SensorData
+from programmingtheiot.cda.sim.SensorDataGenerator import SensorDataGenerator
+from programmingtheiot.cda.sim.BaseSensorSimTask import BaseSensorSimTask
 
-class TemperatureI2cSensorAdapterTask():
+class TemperatureI2cSensorAdapterTask(BaseSensorSimTask):
 	"""
 	Shell representation of class for student implementation.
 	
 	"""
 
 	def __init__(self):
-		pass
+		super(TemperatureI2cSensorAdapterTask, self).__init__(SensorData.TEMP_SENSOR_TYPE, minVal = SensorDataGenerator.LOW_NORMAL_INDOOR_TEMP, maxVal = SensorDataGenerator.HI_NORMAL_INDOOR_TEMP)
+
 	
 	def generateTelemetry(self) -> SensorData:
 		pass

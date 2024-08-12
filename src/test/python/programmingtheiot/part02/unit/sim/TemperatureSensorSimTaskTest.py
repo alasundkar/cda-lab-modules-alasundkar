@@ -10,6 +10,8 @@
 import logging
 import unittest
 
+import programmingtheiot.common.ConfigConst as ConfigConst
+
 from programmingtheiot.cda.sim.TemperatureSensorSimTask import TemperatureSensorSimTask
 
 class TemperatureSensorSimTaskTest(unittest.TestCase):
@@ -25,7 +27,7 @@ class TemperatureSensorSimTaskTest(unittest.TestCase):
 	def setUpClass(self):
 		logging.basicConfig(format = '%(asctime)s:%(module)s:%(levelname)s:%(message)s', level = logging.DEBUG)
 		logging.info("Testing TemperatureSensorSimTask class...")
-		self.tSimTask = TemperatureSensorSimTask()
+		self.tSimTask = TemperatureSensorSimTask(None)
 		
 	def setUp(self):
 		pass
@@ -39,7 +41,7 @@ class TemperatureSensorSimTaskTest(unittest.TestCase):
 		self.assertIsNotNone(sd)
 		
 		# default simulator generates temp values > 0.0C
-		self.assertGreaterEqual(sd.getValue(), 0.0)
+		self.assertGreaterEqual(sd.getValue(), ConfigConst.DEFAULT_VAL)
 		logging.info("Temperature SensorData: %s", str(sd))
 			
 	def testGetTelemetryValue(self):

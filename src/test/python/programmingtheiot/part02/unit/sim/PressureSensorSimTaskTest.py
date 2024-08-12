@@ -10,6 +10,8 @@
 import logging
 import unittest
 
+import programmingtheiot.common.ConfigConst as ConfigConst
+
 from programmingtheiot.cda.sim.PressureSensorSimTask import PressureSensorSimTask
 
 class PressureSensorSimTaskTest(unittest.TestCase):
@@ -25,7 +27,7 @@ class PressureSensorSimTaskTest(unittest.TestCase):
 	def setUpClass(self):
 		logging.basicConfig(format = '%(asctime)s:%(module)s:%(levelname)s:%(message)s', level = logging.DEBUG)
 		logging.info("Testing PressureSensorSimTask class...")
-		self.pSimTask = PressureSensorSimTask()
+		self.pSimTask = PressureSensorSimTask(None)
 		
 	def setUp(self):
 		pass

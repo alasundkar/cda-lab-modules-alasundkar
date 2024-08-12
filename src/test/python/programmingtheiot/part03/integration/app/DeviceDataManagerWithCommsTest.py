@@ -13,6 +13,11 @@ import unittest
 from time import sleep
 
 from programmingtheiot.cda.app.DeviceDataManager import DeviceDataManager
+from programmingtheiot.cda.connection.MqttClientConnector import MqttClientConnector
+
+from programmingtheiot.common.ResourceNameEnum import ResourceNameEnum
+from programmingtheiot.data.DataUtil import DataUtil
+from programmingtheiot.data.ActuatorData import ActuatorData
 
 class DeviceDataManagerWithCommsTest(unittest.TestCase):
 	"""
@@ -32,6 +37,9 @@ class DeviceDataManagerWithCommsTest(unittest.TestCase):
 	test case from the command line, as it will likely fail
 	if run within an IDE in native Windows.
 	
+	NOTE 2: This test requires you to examine each test case,
+	none of which will execute as they're currently disabled.
+	Choose the test
 	"""
 	
 	@classmethod
@@ -45,24 +53,34 @@ class DeviceDataManagerWithCommsTest(unittest.TestCase):
 	def tearDown(self):
 		pass
 
-	#@unittest.skip("Ignore for now.")
+	@unittest.skip("Ignore for now.")
 	def testStartAndStopManagerWithMqtt(self):
 		"""
-		NOTE: Be sure to enable MQTT by setting the following flag to True
+		NOTE: Be sure to enable CoAP by setting the following flag to True
 		within PiotConfig.props
 		enableMqttClient = True
 		enableCoapClient = False
 		
 		"""
-		
 		ddMgr = DeviceDataManager()
 		ddMgr.startManager()
 		
-		sleep(60)
+		mqttClient = MqttClientConnector()
+		mqttClient.connectClient()
 		
+		ad = ActuatorData()
+		ad.setCommand(1)
+		
+		adJson = DataUtil().actuatorDataToJson(ad)
+		
+		mqttClient.publishMessage(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, msg = adJson, qos = 1)
+		
+		sleep(10)
+		
+		mqttClient.disconnectClient()
 		ddMgr.stopManager()
 
-	#@unittest.skip("Ignore for now.")
+	@unittest.skip("Ignore for now.")
 	def testStartAndStopManagerWithCoap(self):
 		"""
 		NOTE: Be sure to enable CoAP by setting the following flag to True
@@ -79,7 +97,7 @@ class DeviceDataManagerWithCommsTest(unittest.TestCase):
 		
 		ddMgr.stopManager()
 
-	#@unittest.skip("Ignore for now.")
+	@unittest.skip("Ignore for now.")
 	def testStartAndStopManagerWithMqttAndCoap(self):
 		"""
 		NOTE: Be sure to enable MQTT and CoAP by setting the following flags to True

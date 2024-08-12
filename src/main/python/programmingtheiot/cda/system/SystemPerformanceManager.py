@@ -12,12 +12,12 @@ import logging
 from apscheduler.schedulers.background import BackgroundScheduler
 
 import programmingtheiot.common.ConfigConst as ConfigConst
-
+from programmingtheiot.data.SystemPerformanceData import SystemPerformanceData 
 from programmingtheiot.common.ConfigUtil import ConfigUtil
 from programmingtheiot.common.IDataMessageListener import IDataMessageListener
-
 from programmingtheiot.cda.system.SystemCpuUtilTask import SystemCpuUtilTask
 from programmingtheiot.cda.system.SystemMemUtilTask import SystemMemUtilTask
+from programmingtheiot.cda.system.SystemDiskUtilTask import SystemDiskUtilTask
 
 class SystemPerformanceManager(object):
 	"""
@@ -25,17 +25,56 @@ class SystemPerformanceManager(object):
 	
 	"""
 
-	def __init__(self):
-		pass
+	def __init__(self, pollRate: int = 30):
+		#pass
+		"""
+		Initialization of class.
+		
+		@param pollRate integer value in seconds at which job should run
+		"""
+		self.cpuUtilTask = SystemCpuUtilTask()
+		self.memUtilTask = SystemMemUtilTask()
+		self.diskUtilTask = SystemDiskUtilTask()
+		self.scheduler = BackgroundScheduler()
+		self.scheduler.add_job(self.handleTelemetry, 'interval', seconds = pollRate)
 
 	def handleTelemetry(self):
-		pass
+		"""
+		fetches and logs CPU and memory util values
 		
+		"""
+		#pass
+		self.cpuUtilPct = self.cpuUtilTask.getTelemetryValue()
+		self.memUtilPct = self.memUtilTask.getTelemetryValue()
+		self.diskUtilPct = self.diskUtilTask.getTelemetryValue()
+		logging.info('CPU utilization is %s percent,', str(self.cpuUtilPct))
+		logging.info('Mem utilization is %s percent, ',str(self.memUtilPct))
+		logging.info('Disk utilization is %s percent,', self.diskUtilPct)
+
+		sysPerfData = SystemPerformanceData()
+		#sysPerfData.setLocationID(self.locationID)
+		sysPerfData.setCpuUtilization(self.cpuUtilPct)
+		sysPerfData.setMemoryUtilization(self.memUtilPct)
+		sysPerfData.setDiskUtilization(self.diskUtilPct)
+		
+				
 	def setDataMessageListener(self, listener: IDataMessageListener) -> bool:
 		pass
 	
 	def startManager(self):
-		pass
+		"""
+		Starts the SystemPerformanceManager and scheduler.
+		
+		"""
+		#pass
+		logging.info("Started SystemPerformanceManager")
+		self.scheduler.start()
 		
 	def stopManager(self):
-		pass
+		"""
+		Stops the SystemPerformanceManager and scheduler.
+		
+		"""
+		#pass
+		logging.info("Stopped SystemPerformanceManager")
+		self.scheduler.shutdown()

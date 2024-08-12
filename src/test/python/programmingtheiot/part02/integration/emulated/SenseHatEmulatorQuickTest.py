@@ -14,6 +14,8 @@ from time import sleep
 
 from pisense import SenseHAT
 
+import programmingtheiot.common.ConfigConst as ConfigConst
+
 class SenseHatEmulatorQuickTest(unittest.TestCase):
 	"""
 	This test case class contains very basic unit tests for
